@@ -20,14 +20,15 @@ $env:JAVA_HOME = "$env:USERPROFILE\.jdks\openjdk-24.0.2+12-54"
 ## Build, test, play
 ```powershell
 .\gradlew.bat test                 # run all tests (report: build\reports\tests\test\index.html)
-.\gradlew.bat jar                  # build\libs\mappa-0.2.0.jar (includes Gson)
-& "$env:JAVA_HOME\bin\java" -jar build\libs\mappa-0.2.0.jar
+.\gradlew.bat jar                  # build\libs\MappaTestingStuff-0.2.0.jar (includes Gson)
+& "$env:JAVA_HOME\bin\java" -jar build\libs\MappaTestingStuff-0.2.0.jar
 ```
 Launch flags: `--dev` (developer start: lots of gold / max level), `--seed=N` (repeatable randomness).
 Add `-Dmappa.noColor=true` before `-jar` to turn off terminal colors.
 
 In IntelliJ: **File → Open → build.gradle → Open as Project**, then run `mappa.GameLauncher`.
-(The old `MappaTestingStuff.iml` setup predates the Gradle layout.)
+IntelliJ shows the project as **MappaTestingStuff** and creates its own project files from `build.gradle`
+(`.idea/` and `*.iml` are not tracked in git).
 
 ## Project layout
 ```
