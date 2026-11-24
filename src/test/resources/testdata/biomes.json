@@ -1,0 +1,8 @@
+[
+  { "id": "t_forest", "name": "Test Forest", "danger": [1, 2], "weight": 1,
+    "resources": [ { "item": "t_wood", "weight": 1, "yield": [2, 2] } ],
+    "mobs": [ { "id": "t_rat", "weight": 1, "levelRange": [0, 1], "nightOnly": true } ],
+    "hazards": [ { "id": "thorns", "chance": 0.5, "damage": 1 } ],
+    "survival": { "hungerDrainPerHour": 10, "thirstDrainPerHour": 20 },
+    "traits": ["shelter"] }
+]

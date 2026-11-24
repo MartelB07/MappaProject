@@ -1,0 +1,10 @@
+[
+  { "id": "t_home", "name": "Test Home", "levelReq": 0, "hasChests": false,
+    "mobs": [ { "id": "t_rat", "weight": 1, "levelRange": [0, 0] }, { "id": "t_king", "weight": 1, "levelRange": [3, 3] } ],
+    "neighbors": ["t_town"] },
+  { "id": "t_town", "name": "Test Town", "levelReq": 1, "hasChests": true, "chestLevel": [1, 3],
+    "mobs": [ { "id": "t_rat", "weight": 1, "levelRange": [1, 2] } ] },
+  { "id": "t_castle", "name": "Test Castle", "levelReq": 3, "hasChests": true, "chestLevel": [3, 3], "isFinal": true,
+    "mobs": [ { "id": "t_king", "weight": 1, "levelRange": [3, 3] } ],
+    "neighbors": ["t_town"] }
+]

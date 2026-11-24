@@ -1,0 +1,4 @@
+[
+  { "id": "EASY",      "name": "Easy",      "color": "GREEN",  "rank": 0, "mobScale": 1.0, "allowedRarities": ["COMMON"] },
+  { "id": "NIGHTMARE", "name": "Nightmare", "color": "PURPLE", "rank": 1, "mobScale": 2.0, "allowedRarities": ["RARE", "LEGENDARY"] }
+]

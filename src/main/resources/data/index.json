@@ -1,0 +1,35 @@
+{
+  "_comment": "Every content file must be listed here under its type. ContentValidationTest fails if a file under data/ is missing from this index.",
+  "files": {
+    "rarities":     ["common/rarities.json"],
+    "difficulties": ["common/difficulties.json"],
+    "level_curves": ["common/level_curves.json"],
+    "items": [
+      "adventure/items.json",
+      "dungeons/items/starter.json",
+      "dungeons/items/war.json",
+      "dungeons/items/mage.json",
+      "dungeons/items/guard.json",
+      "dungeons/items/spells.json",
+      "explore/resources.json"
+    ],
+    "mobs": [
+      "adventure/mobs.json",
+      "dungeons/mobs.json",
+      "explore/mobs.json"
+    ],
+    "dungeons": [
+      "dungeons/dungeons/dungeon_01.json",
+      "dungeons/dungeons/dungeon_02.json",
+      "dungeons/dungeons/dungeon_03.json"
+    ],
+    "regions": ["adventure/regions.json"],
+    "chests":  ["adventure/chests.json"],
+    "biomes":  ["explore/biomes.json"],
+    "configs": [
+      "adventure/config.json",
+      "dungeons/config.json",
+      "explore/config.json"
+    ]
+  }
+}

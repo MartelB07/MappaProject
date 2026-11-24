@@ -1,0 +1,7 @@
+[
+  { "id": "COMMON",    "name": "Common",    "color": "WHITE",  "rank": 0, "weight": 60, "multiplier": [1.00, 1.15] },
+  { "id": "UNCOMMON",  "name": "Uncommon",  "color": "GREEN",  "rank": 1, "weight": 25, "multiplier": [1.15, 1.35] },
+  { "id": "RARE",      "name": "Rare",      "color": "BLUE",   "rank": 2, "weight": 10, "multiplier": [1.35, 1.60] },
+  { "id": "EPIC",      "name": "Epic",      "color": "PURPLE", "rank": 3, "weight": 4,  "multiplier": [1.60, 2.00] },
+  { "id": "LEGENDARY", "name": "Legendary", "color": "GOLD",   "rank": 4, "weight": 1,  "multiplier": [2.00, 2.50] }
+]

@@ -1,0 +1,11 @@
+{
+  "id": "dungeon_a", "name": "Dungeon A", "order": 1,
+  "difficulties": {
+    "EASY":      { "levelReq": 0, "mobLevel": 1, "rewardLevelCap": 0 },
+    "NIGHTMARE": { "levelReq": 0, "mobLevel": 1, "rewardLevelCap": 5 }
+  },
+  "turnLimit": 30,
+  "waves": [ ["t_grunt"] ],
+  "boss": "t_boss",
+  "rewardPool": { "tags": ["t:reward"] }
+}

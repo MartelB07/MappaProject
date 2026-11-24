@@ -1,0 +1,10 @@
+{
+  "id": "dungeon_b", "name": "Dungeon B", "order": 2, "unlockRequires": "dungeon_a",
+  "difficulties": {
+    "EASY": { "levelReq": 0, "mobLevel": 2, "rewardLevelCap": 5 }
+  },
+  "turnLimit": 30,
+  "waves": [ ["t_grunt", "t_grunt", "t_grunt", "t_grunt", "t_grunt"] ],
+  "boss": "t_boss",
+  "rewardPool": { "items": ["t_big_sword"] }
+}

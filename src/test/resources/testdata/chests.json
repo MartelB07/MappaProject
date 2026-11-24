@@ -1,0 +1,6 @@
+[
+  { "id": "t_chest_potions", "name": "Potion Chest", "kind": "CONSUMABLES", "weight": 1, "itemTags": ["a:potion"], "amount": [5, 5] },
+  { "id": "t_chest_gear",    "name": "Gear Chest",   "kind": "ITEMS",       "weight": 1, "itemTags": ["a:gear"] },
+  { "id": "t_chest_gold",    "name": "Gold Chest",   "kind": "GOLD",        "weight": 1, "amount": [2, 2] },
+  { "id": "t_chest_monster", "name": "Monster Chest","kind": "MONSTER",     "weight": 1 }
+]

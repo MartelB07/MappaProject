@@ -1,0 +1,290 @@
+[
+  {
+    "id": "d1_1",
+    "name": "Dungeon 1-1",
+    "archetype": "MAGE",
+    "baseLevel": 0,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 2,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 1,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 1,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d1_2",
+    "name": "Dungeon 1-2",
+    "archetype": "WARRIOR",
+    "baseLevel": 0,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 2,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 2,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 1,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d1_3",
+    "name": "Dungeon 1-3",
+    "archetype": "MAGE",
+    "baseLevel": 0,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 5,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 1,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 1,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d1_4",
+    "name": "Dungeon 1-4",
+    "archetype": "WARRIOR",
+    "baseLevel": 0,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 5,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 2,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 1,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d1_5",
+    "name": "Dungeon 1-5",
+    "archetype": "BOSS",
+    "baseLevel": 0,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 15,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 5,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 3,
+    "gold": 10,
+    "attackEvery": 3,
+    "boss": true
+  },
+  {
+    "id": "d2_1",
+    "name": "Dungeon 2-1",
+    "archetype": "MAGE",
+    "baseLevel": 15,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 40,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 10,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 8,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d2_2",
+    "name": "Dungeon 2-2",
+    "archetype": "WARRIOR",
+    "baseLevel": 15,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 40,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 20,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 8,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d2_3",
+    "name": "Dungeon 2-3",
+    "archetype": "MAGE",
+    "baseLevel": 15,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 70,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 10,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 8,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d2_4",
+    "name": "Dungeon 2-4",
+    "archetype": "WARRIOR",
+    "baseLevel": 15,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 70,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 20,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 8,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d2_5",
+    "name": "Dungeon 2-5",
+    "archetype": "BOSS",
+    "baseLevel": 15,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 210,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 30,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 24,
+    "gold": 60,
+    "attackEvery": 3,
+    "boss": true
+  },
+  {
+    "id": "d3_1",
+    "name": "Dungeon 3-1",
+    "archetype": "MAGE",
+    "baseLevel": 30,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 600,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 60,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 40,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d3_2",
+    "name": "Dungeon 3-2",
+    "archetype": "WARRIOR",
+    "baseLevel": 30,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 600,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 80,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 40,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d3_3",
+    "name": "Dungeon 3-3",
+    "archetype": "MAGE",
+    "baseLevel": 30,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 1000,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 60,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 40,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d3_4",
+    "name": "Dungeon 3-4",
+    "archetype": "WARRIOR",
+    "baseLevel": 30,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 1000,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 80,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 40,
+    "gold": 0,
+    "attackEvery": 3
+  },
+  {
+    "id": "d3_5",
+    "name": "Dungeon 3-5",
+    "archetype": "BOSS",
+    "baseLevel": 30,
+    "stats": {
+      "MAX_HEALTH": {
+        "base": 3000,
+        "perLevel": 0.0
+      },
+      "DAMAGE": {
+        "base": 150,
+        "perLevel": 0.0
+      }
+    },
+    "exp": 110,
+    "gold": 300,
+    "attackEvery": 3,
+    "boss": true
+  }
+]

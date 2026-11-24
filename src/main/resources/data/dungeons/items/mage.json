@@ -1,0 +1,541 @@
+[
+  {
+    "id": "d_mage_helmet_1_1",
+    "name": "Mage Helmet 1-1",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 0,
+    "price": 10,
+    "stats": {
+      "MAX_HEALTH": 2,
+      "MAGE_DAMAGE": 1
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_1_2",
+    "name": "Mage Helmet 1-2",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 2,
+    "price": 26,
+    "stats": {
+      "MAX_HEALTH": 4,
+      "MAGE_DAMAGE": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_1_3",
+    "name": "Mage Helmet 1-3",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 5,
+    "price": 50,
+    "stats": {
+      "MAX_HEALTH": 8,
+      "MAGE_DAMAGE": 4
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_1_4",
+    "name": "Mage Helmet 1-4",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 10,
+    "price": 90,
+    "stats": {
+      "MAX_HEALTH": 20,
+      "MAGE_DAMAGE": 6
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_2_1",
+    "name": "Mage Helmet 2-1",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 15,
+    "price": 130,
+    "stats": {
+      "MAX_HEALTH": 18,
+      "MAGE_DAMAGE": 10
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_2_2",
+    "name": "Mage Helmet 2-2",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 20,
+      "MAGE_DAMAGE": 12
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_2_3",
+    "name": "Mage Helmet 2-3",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 24,
+      "MAGE_DAMAGE": 15
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_2_4",
+    "name": "Mage Helmet 2-4",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 20,
+    "price": 170,
+    "stats": {
+      "MAX_HEALTH": 35,
+      "MAGE_DAMAGE": 20
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_2_5",
+    "name": "Mage Helmet 2-5",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 25,
+    "price": 210,
+    "stats": {
+      "MAX_HEALTH": 50,
+      "MAGE_DAMAGE": 24
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_3_1",
+    "name": "Mage Helmet 3-1",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 30,
+    "price": 250,
+    "stats": {
+      "MAX_HEALTH": 45,
+      "MAGE_DAMAGE": 30
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_3_2",
+    "name": "Mage Helmet 3-2",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 33,
+    "price": 274,
+    "stats": {
+      "MAX_HEALTH": 55,
+      "MAGE_DAMAGE": 35
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_3_3",
+    "name": "Mage Helmet 3-3",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 36,
+    "price": 298,
+    "stats": {
+      "MAX_HEALTH": 60,
+      "MAGE_DAMAGE": 40
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_helmet_3_4",
+    "name": "Mage Helmet 3-4",
+    "slot": "HELMET",
+    "class": "MAGE",
+    "levelReq": 41,
+    "price": 338,
+    "stats": {
+      "MAX_HEALTH": 90,
+      "MAGE_DAMAGE": 50
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_1_1",
+    "name": "Mage Armor 1-1",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 0,
+    "price": 10,
+    "stats": {
+      "MAX_HEALTH": 2,
+      "MAGE_DAMAGE": 1
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_1_2",
+    "name": "Mage Armor 1-2",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 2,
+    "price": 26,
+    "stats": {
+      "MAX_HEALTH": 4,
+      "MAGE_DAMAGE": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_1_3",
+    "name": "Mage Armor 1-3",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 5,
+    "price": 50,
+    "stats": {
+      "MAX_HEALTH": 8,
+      "MAGE_DAMAGE": 4
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_1_4",
+    "name": "Mage Armor 1-4",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 10,
+    "price": 90,
+    "stats": {
+      "MAX_HEALTH": 20,
+      "MAGE_DAMAGE": 6
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_2_1",
+    "name": "Mage Armor 2-1",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 15,
+    "price": 130,
+    "stats": {
+      "MAX_HEALTH": 18,
+      "MAGE_DAMAGE": 10
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_2_2",
+    "name": "Mage Armor 2-2",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 20,
+      "MAGE_DAMAGE": 12
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_2_3",
+    "name": "Mage Armor 2-3",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 24,
+      "MAGE_DAMAGE": 15
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_2_4",
+    "name": "Mage Armor 2-4",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 20,
+    "price": 170,
+    "stats": {
+      "MAX_HEALTH": 35,
+      "MAGE_DAMAGE": 20
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_2_5",
+    "name": "Mage Armor 2-5",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 25,
+    "price": 210,
+    "stats": {
+      "MAX_HEALTH": 50,
+      "MAGE_DAMAGE": 24
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_3_1",
+    "name": "Mage Armor 3-1",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 30,
+    "price": 250,
+    "stats": {
+      "MAX_HEALTH": 45,
+      "MAGE_DAMAGE": 30
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_3_2",
+    "name": "Mage Armor 3-2",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 33,
+    "price": 274,
+    "stats": {
+      "MAX_HEALTH": 55,
+      "MAGE_DAMAGE": 35
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_3_3",
+    "name": "Mage Armor 3-3",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 36,
+    "price": 298,
+    "stats": {
+      "MAX_HEALTH": 60,
+      "MAGE_DAMAGE": 40
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_mage_armor_3_4",
+    "name": "Mage Armor 3-4",
+    "slot": "CHEST",
+    "class": "MAGE",
+    "levelReq": 41,
+    "price": 338,
+    "stats": {
+      "MAX_HEALTH": 90,
+      "MAGE_DAMAGE": 50
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_staff_1_1",
+    "name": "Staff 1-1",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 0,
+    "price": 10,
+    "stats": {
+      "MAGE_DAMAGE": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_staff_1_2",
+    "name": "Staff 1-2",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 5,
+    "price": 50,
+    "stats": {
+      "MAGE_DAMAGE": 5
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_staff_1_3",
+    "name": "Staff 1-3",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 12,
+    "price": 212,
+    "stats": {
+      "MAGE_DAMAGE": 12
+    },
+    "tags": [
+      "dungeon:1",
+      "set:mage"
+    ],
+    "fixedRarity": "EPIC"
+  },
+  {
+    "id": "d_staff_2_1",
+    "name": "Staff 2-1",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAGE_DAMAGE": 18
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_staff_2_2",
+    "name": "Staff 2-2",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 27,
+    "price": 452,
+    "stats": {
+      "MAGE_DAMAGE": 30
+    },
+    "tags": [
+      "dungeon:2",
+      "set:mage"
+    ],
+    "fixedRarity": "EPIC"
+  },
+  {
+    "id": "d_staff_3_1",
+    "name": "Staff 3-1",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 30,
+    "price": 250,
+    "stats": {
+      "MAGE_DAMAGE": 40
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_staff_3_2",
+    "name": "Staff 3-2",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 33,
+    "price": 274,
+    "stats": {
+      "MAGE_DAMAGE": 48
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ]
+  },
+  {
+    "id": "d_staff_3_3",
+    "name": "Staff 3-3",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 43,
+    "price": 708,
+    "stats": {
+      "MAGE_DAMAGE": 80
+    },
+    "tags": [
+      "dungeon:3",
+      "set:mage"
+    ],
+    "fixedRarity": "EPIC"
+  }
+]

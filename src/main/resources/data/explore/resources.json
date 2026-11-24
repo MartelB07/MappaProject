@@ -1,0 +1,10 @@
+[
+  { "id": "res_wood",    "name": "Wood",    "slot": "RESOURCE", "price": 1, "tags": ["explore:resource"] },
+  { "id": "res_stone",   "name": "Stone",   "slot": "RESOURCE", "price": 1, "tags": ["explore:resource"] },
+  { "id": "res_berries", "name": "Berries", "slot": "CONSUMABLE", "price": 2, "effect": { "heal": 3 },
+    "tags": ["explore:resource", "explore:food"] },
+  { "id": "res_water",   "name": "Fresh Water", "slot": "CONSUMABLE", "price": 1, "effect": { "heal": 1 },
+    "tags": ["explore:resource", "explore:drink"] },
+  { "id": "res_cactus_fruit", "name": "Cactus Fruit", "slot": "CONSUMABLE", "price": 3, "effect": { "heal": 4 },
+    "tags": ["explore:resource", "explore:food", "explore:drink"] }
+]

@@ -1,0 +1,35 @@
+{
+  "id": "adventure",
+  "levelCurve": "adventure",
+  "startRegion": "home",
+  "inventorySize": 30,
+  "startingGold": 0,
+  "sellPercent": 75,
+  "shopTag": "adv:shop",
+  "potionTag": "adv:potion",
+
+  "healthByLevel": [10, 20, 40, 60, 80, 100, 130, 150, 180, 200, 250],
+  "goldPerLevelUp": 10,
+
+  "startingEquipment": ["adv_cap", "adv_shirt", "adv_socks", "adv_gloves"],
+  "startingItems": [ { "id": "adv_potion_1", "count": 10 } ],
+
+  "combat": {
+    "critChancePercent": 14,
+    "critMultiplier": 2,
+    "damageVariance": [0.65, 1.25],
+    "escapeChancePercent": 50,
+    "enhancedChancePercent": 25,
+    "enhancedMaxLevelsAbove": 3,
+    "monsterChestRewardMultiplier": [1.0, 4.0]
+  },
+
+  "reviveCostPerLevel": 35,
+
+  "chests": {
+    "searchCountdownStart": 5,
+    "searchCountdownAfterOpen": [1, 5],
+    "countdownPerWin": [0, 2],
+    "keyDropChancePercent": 10
+  }
+}

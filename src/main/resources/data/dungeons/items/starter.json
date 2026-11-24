@@ -1,0 +1,62 @@
+[
+  {
+    "id": "d_starter_sword",
+    "name": "Starter Sword",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 0,
+    "price": 2,
+    "stats": {
+      "WAR_DAMAGE": 2
+    },
+    "tags": [
+      "starter"
+    ]
+  },
+  {
+    "id": "d_starter_staff",
+    "name": "Starter Staff",
+    "slot": "WEAPON",
+    "class": "MAGE",
+    "levelReq": 0,
+    "price": 2,
+    "stats": {
+      "MAGE_DAMAGE": 2
+    },
+    "tags": [
+      "starter"
+    ]
+  },
+  {
+    "id": "d_war_spell",
+    "name": "War Spell",
+    "slot": "SPELL",
+    "class": "WAR",
+    "levelReq": 0,
+    "price": 2,
+    "effect": {
+      "damage": 1,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "starter"
+    ]
+  },
+  {
+    "id": "d_mage_spell",
+    "name": "Mage Spell",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 0,
+    "price": 2,
+    "effect": {
+      "damage": 1,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "starter"
+    ]
+  }
+]

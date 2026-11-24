@@ -1,0 +1,8 @@
+[
+  { "id": "exp_wolf", "name": "Wolf", "archetype": "BEAST", "baseLevel": 1,
+    "stats": { "MAX_HEALTH": { "base": 15, "perLevel": 0.2 }, "DAMAGE": { "base": 3, "perLevel": 0.15 } },
+    "exp": 3, "gold": 0 },
+  { "id": "exp_scorpion", "name": "Scorpion", "archetype": "BEAST", "baseLevel": 2,
+    "stats": { "MAX_HEALTH": { "base": 10, "perLevel": 0.2 }, "DAMAGE": { "base": 5, "perLevel": 0.15 } },
+    "exp": 4, "gold": 0 }
+]

@@ -1,0 +1,19 @@
+{
+  "id": "dungeons",
+  "levelCurve": "test",
+  "startingHealth": 10,
+  "healthPerPoint": 2,
+  "damagePerPoint": 1,
+  "pointsPerLevel": 1,
+  "resetCostPerPoint": 25,
+  "inventorySize": 10,
+  "sellPercent": 75,
+  "startingGold": 0,
+  "startingItems": ["t_sword", "t_bolt", "t_heal"],
+  "runModes": [
+    { "id": "REGULAR",  "name": "Regular",  "lives": 0, "deathTurnPenalty": 5, "respawnHealthPercent": 100,
+      "rewardItems": 2, "description": "regular" },
+    { "id": "HARDCORE", "name": "Hardcore", "lives": 1, "deathTurnPenalty": 0, "respawnHealthPercent": 100,
+      "rewardItems": 3, "description": "hardcore" }
+  ]
+}

@@ -1,0 +1,10 @@
+[
+  { "id": "EASY",      "name": "Easy",      "color": "GREEN",  "rank": 0, "mobScale": 1.0,
+    "allowedRarities": ["COMMON", "UNCOMMON", "RARE"] },
+  { "id": "MEDIUM",    "name": "Medium",    "color": "YELLOW", "rank": 1, "mobScale": 2.0,
+    "allowedRarities": ["COMMON", "UNCOMMON", "RARE", "EPIC"] },
+  { "id": "INSANE",    "name": "Insane",    "color": "RED",    "rank": 2, "mobScale": 2.5,
+    "allowedRarities": ["UNCOMMON", "RARE", "EPIC"] },
+  { "id": "NIGHTMARE", "name": "Nightmare", "color": "PURPLE", "rank": 3, "mobScale": 4.0,
+    "allowedRarities": ["RARE", "EPIC", "LEGENDARY"] }
+]

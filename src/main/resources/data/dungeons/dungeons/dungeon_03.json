@@ -1,0 +1,59 @@
+{
+  "id": "dungeon_03",
+  "name": "Dungeon 3",
+  "order": 3,
+  "difficulties": {
+    "EASY": {
+      "levelReq": 30,
+      "mobLevel": 30,
+      "rewardLevelCap": 33
+    },
+    "MEDIUM": {
+      "levelReq": 33,
+      "mobLevel": 33,
+      "rewardLevelCap": 36
+    },
+    "INSANE": {
+      "levelReq": 36,
+      "mobLevel": 36,
+      "rewardLevelCap": 40
+    },
+    "NIGHTMARE": {
+      "levelReq": 40,
+      "mobLevel": 40,
+      "rewardLevelCap": 45
+    }
+  },
+  "turnLimit": 75,
+  "waves": [
+    [
+      "d3_1",
+      "d3_1",
+      "d3_2"
+    ],
+    [
+      "d3_1",
+      "d3_2",
+      "d3_2"
+    ],
+    [
+      "d3_3",
+      "d3_1",
+      "d3_4",
+      "d3_2"
+    ],
+    [
+      "d3_3",
+      "d3_3",
+      "d3_4",
+      "d3_4"
+    ]
+  ],
+  "boss": "d3_5",
+  "rewardPool": {
+    "tags": [
+      "dungeon:3"
+    ]
+  },
+  "unlockRequires": "dungeon_02"
+}

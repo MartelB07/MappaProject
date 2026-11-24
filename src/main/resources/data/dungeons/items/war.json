@@ -1,0 +1,556 @@
+[
+  {
+    "id": "d_war_helmet_1_1",
+    "name": "War Helmet 1-1",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 0,
+    "price": 10,
+    "stats": {
+      "MAX_HEALTH": 2,
+      "WAR_DAMAGE": 1
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_1_2",
+    "name": "War Helmet 1-2",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 2,
+    "price": 26,
+    "stats": {
+      "MAX_HEALTH": 4,
+      "WAR_DAMAGE": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_1_3",
+    "name": "War Helmet 1-3",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 5,
+    "price": 50,
+    "stats": {
+      "MAX_HEALTH": 8,
+      "WAR_DAMAGE": 4
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_1_4",
+    "name": "War Helmet 1-4",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 10,
+    "price": 90,
+    "stats": {
+      "MAX_HEALTH": 20,
+      "WAR_DAMAGE": 6
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_2_1",
+    "name": "War Helmet 2-1",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 15,
+    "price": 130,
+    "stats": {
+      "MAX_HEALTH": 18,
+      "WAR_DAMAGE": 10
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_2_2",
+    "name": "War Helmet 2-2",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 20,
+      "WAR_DAMAGE": 12
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_2_3",
+    "name": "War Helmet 2-3",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 24,
+      "WAR_DAMAGE": 15
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_2_4",
+    "name": "War Helmet 2-4",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 20,
+    "price": 170,
+    "stats": {
+      "MAX_HEALTH": 35,
+      "WAR_DAMAGE": 20
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_2_5",
+    "name": "War Helmet 2-5",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 25,
+    "price": 210,
+    "stats": {
+      "MAX_HEALTH": 50,
+      "WAR_DAMAGE": 24
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_3_1",
+    "name": "War Helmet 3-1",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 30,
+    "price": 250,
+    "stats": {
+      "MAX_HEALTH": 45,
+      "WAR_DAMAGE": 30
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_3_2",
+    "name": "War Helmet 3-2",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 33,
+    "price": 274,
+    "stats": {
+      "MAX_HEALTH": 55,
+      "WAR_DAMAGE": 35
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_3_3",
+    "name": "War Helmet 3-3",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 36,
+    "price": 298,
+    "stats": {
+      "MAX_HEALTH": 60,
+      "WAR_DAMAGE": 40
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_helmet_3_4",
+    "name": "War Helmet 3-4",
+    "slot": "HELMET",
+    "class": "WAR",
+    "levelReq": 41,
+    "price": 338,
+    "stats": {
+      "MAX_HEALTH": 90,
+      "WAR_DAMAGE": 50
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_1_1",
+    "name": "War Armor 1-1",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 0,
+    "price": 10,
+    "stats": {
+      "MAX_HEALTH": 2,
+      "WAR_DAMAGE": 1
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_1_2",
+    "name": "War Armor 1-2",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 2,
+    "price": 26,
+    "stats": {
+      "MAX_HEALTH": 4,
+      "WAR_DAMAGE": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_1_3",
+    "name": "War Armor 1-3",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 5,
+    "price": 50,
+    "stats": {
+      "MAX_HEALTH": 8,
+      "WAR_DAMAGE": 4
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_1_4",
+    "name": "War Armor 1-4",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 10,
+    "price": 90,
+    "stats": {
+      "MAX_HEALTH": 20,
+      "WAR_DAMAGE": 6
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_2_1",
+    "name": "War Armor 2-1",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 15,
+    "price": 130,
+    "stats": {
+      "MAX_HEALTH": 18,
+      "WAR_DAMAGE": 10
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_2_2",
+    "name": "War Armor 2-2",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 20,
+      "WAR_DAMAGE": 12
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_2_3",
+    "name": "War Armor 2-3",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 24,
+      "WAR_DAMAGE": 15
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_2_4",
+    "name": "War Armor 2-4",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 20,
+    "price": 170,
+    "stats": {
+      "MAX_HEALTH": 35,
+      "WAR_DAMAGE": 20
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_2_5",
+    "name": "War Armor 2-5",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 25,
+    "price": 210,
+    "stats": {
+      "MAX_HEALTH": 50,
+      "WAR_DAMAGE": 24
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_3_1",
+    "name": "War Armor 3-1",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 30,
+    "price": 250,
+    "stats": {
+      "MAX_HEALTH": 45,
+      "WAR_DAMAGE": 30
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_3_2",
+    "name": "War Armor 3-2",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 33,
+    "price": 274,
+    "stats": {
+      "MAX_HEALTH": 55,
+      "WAR_DAMAGE": 35
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_3_3",
+    "name": "War Armor 3-3",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 36,
+    "price": 298,
+    "stats": {
+      "MAX_HEALTH": 60,
+      "WAR_DAMAGE": 40
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_war_armor_3_4",
+    "name": "War Armor 3-4",
+    "slot": "CHEST",
+    "class": "WAR",
+    "levelReq": 41,
+    "price": 338,
+    "stats": {
+      "MAX_HEALTH": 90,
+      "WAR_DAMAGE": 50
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_sword_1_1",
+    "name": "Sword 1-1",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 0,
+    "price": 10,
+    "stats": {
+      "WAR_DAMAGE": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_sword_1_2",
+    "name": "Sword 1-2",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 2,
+    "price": 26,
+    "stats": {
+      "WAR_DAMAGE": 4
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_sword_1_3",
+    "name": "Sword 1-3",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 6,
+    "price": 58,
+    "stats": {
+      "WAR_DAMAGE": 7
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_sword_1_4",
+    "name": "Sword 1-4",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 12,
+    "price": 212,
+    "stats": {
+      "WAR_DAMAGE": 12
+    },
+    "tags": [
+      "dungeon:1",
+      "set:war"
+    ],
+    "fixedRarity": "EPIC"
+  },
+  {
+    "id": "d_sword_2_1",
+    "name": "Sword 2-1",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "WAR_DAMAGE": 18
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_sword_2_2",
+    "name": "Sword 2-2",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 27,
+    "price": 452,
+    "stats": {
+      "WAR_DAMAGE": 30
+    },
+    "tags": [
+      "dungeon:2",
+      "set:war"
+    ],
+    "fixedRarity": "EPIC"
+  },
+  {
+    "id": "d_sword_3_1",
+    "name": "Sword 3-1",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 30,
+    "price": 250,
+    "stats": {
+      "WAR_DAMAGE": 40
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_sword_3_2",
+    "name": "Sword 3-2",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 35,
+    "price": 290,
+    "stats": {
+      "WAR_DAMAGE": 55
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ]
+  },
+  {
+    "id": "d_sword_3_3",
+    "name": "Sword 3-3",
+    "slot": "WEAPON",
+    "class": "WAR",
+    "levelReq": 41,
+    "price": 676,
+    "stats": {
+      "WAR_DAMAGE": 75
+    },
+    "tags": [
+      "dungeon:3",
+      "set:war"
+    ],
+    "fixedRarity": "EPIC"
+  }
+]

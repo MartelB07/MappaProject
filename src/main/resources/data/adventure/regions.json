@@ -1,0 +1,41 @@
+[
+  { "id": "home", "name": "Home", "levelReq": 0, "hasChests": false,
+    "mobs": [
+      { "id": "adv_vecno",        "weight": 3, "levelRange": [0, 0] },
+      { "id": "adv_grinch",       "weight": 2, "levelRange": [1, 1] },
+      { "id": "adv_french_fry",   "weight": 1, "levelRange": [7, 7] },
+      { "id": "adv_homeless_man", "weight": 1, "levelRange": [9, 9] }
+    ],
+    "neighbors": ["yorksville", "town_of_pinocchio"] },
+
+  { "id": "yorksville", "name": "Yorksville", "levelReq": 1, "hasChests": true, "chestLevel": [1, 3],
+    "mobs": [ { "id": "adv_grinch", "weight": 1, "levelRange": [1, 1] } ],
+    "neighbors": ["home", "old_town"] },
+
+  { "id": "town_of_pinocchio", "name": "Town of Pinocchio", "levelReq": 2, "hasChests": true, "chestLevel": [2, 5],
+    "mobs": [
+      { "id": "adv_grinch",    "weight": 1, "levelRange": [1, 1] },
+      { "id": "adv_pinocchio", "weight": 1, "levelRange": [3, 3] }
+    ],
+    "neighbors": ["home", "the_valley", "junk_yard", "old_town"] },
+
+  { "id": "the_valley", "name": "The Valley", "levelReq": 7, "hasChests": false,
+    "mobs": [ { "id": "adv_french_fry", "weight": 1, "levelRange": [7, 7] } ],
+    "neighbors": ["town_of_pinocchio", "junk_yard"] },
+
+  { "id": "junk_yard", "name": "Junk Yard", "levelReq": 7, "hasChests": false,
+    "mobs": [
+      { "id": "adv_french_fry",   "weight": 2, "levelRange": [7, 7] },
+      { "id": "adv_homeless_man", "weight": 1, "levelRange": [9, 9] }
+    ],
+    "neighbors": ["town_of_pinocchio", "the_valley", "old_town"] },
+
+  { "id": "old_town", "name": "Old Town", "levelReq": 9, "hasChests": true, "chestLevel": [6, 10],
+    "mobs": [ { "id": "adv_homeless_man", "weight": 1, "levelRange": [9, 9] } ],
+    "neighbors": ["yorksville", "town_of_pinocchio", "junk_yard", "hidden_village"] },
+
+  { "id": "hidden_village", "name": "Hidden Village", "levelReq": 10, "hasChests": true, "chestLevel": [8, 10],
+    "isFinal": true,
+    "mobs": [ { "id": "adv_boss", "weight": 1, "levelRange": [10, 10] } ],
+    "neighbors": ["old_town"] }
+]

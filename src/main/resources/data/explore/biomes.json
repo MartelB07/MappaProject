@@ -1,0 +1,22 @@
+[
+  { "id": "forest", "name": "Whispering Forest", "danger": [1, 4], "weight": 3,
+    "resources": [
+      { "item": "res_wood",    "weight": 5, "yield": [1, 3] },
+      { "item": "res_berries", "weight": 3, "yield": [1, 4] },
+      { "item": "res_water",   "weight": 2, "yield": [1, 2] }
+    ],
+    "mobs": [ { "id": "exp_wolf", "weight": 1, "levelRange": [1, 4], "nightOnly": true } ],
+    "hazards": [ { "id": "thorns", "description": "You push through a thorn bush.", "chance": 0.05, "damage": 2 } ],
+    "survival": { "hungerDrainPerHour": 2, "thirstDrainPerHour": 3 },
+    "traits": ["shelter", "fresh_water"] },
+
+  { "id": "desert", "name": "Red Dune Desert", "danger": [2, 6], "weight": 2,
+    "resources": [
+      { "item": "res_stone",        "weight": 4, "yield": [1, 2] },
+      { "item": "res_cactus_fruit", "weight": 2, "yield": [1, 2] }
+    ],
+    "mobs": [ { "id": "exp_scorpion", "weight": 1, "levelRange": [2, 6] } ],
+    "hazards": [ { "id": "heatstroke", "description": "The midday sun beats down on you.", "chance": 0.10, "damage": 3 } ],
+    "survival": { "hungerDrainPerHour": 2, "thirstDrainPerHour": 6 },
+    "traits": ["extreme_heat", "open_terrain"] }
+]

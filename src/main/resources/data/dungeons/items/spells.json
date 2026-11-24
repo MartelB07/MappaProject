@@ -1,0 +1,312 @@
+[
+  {
+    "id": "d_ws_1_1",
+    "name": "WS 1-1",
+    "slot": "SPELL",
+    "class": "WAR",
+    "levelReq": 0,
+    "price": 5,
+    "effect": {
+      "damage": 3,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ws_1_2",
+    "name": "WS 1-2",
+    "slot": "SPELL",
+    "class": "WAR",
+    "levelReq": 3,
+    "price": 20,
+    "effect": {
+      "damage": 8,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ws_1_3",
+    "name": "WS 1-3",
+    "slot": "SPELL",
+    "class": "WAR",
+    "levelReq": 8,
+    "price": 50,
+    "effect": {
+      "damage": 20,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ws_2_1",
+    "name": "WS 2-1",
+    "slot": "SPELL",
+    "class": "WAR",
+    "levelReq": 14,
+    "price": 50,
+    "effect": {
+      "damage": 25,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:2",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ws_2_2",
+    "name": "WS 2-2",
+    "slot": "SPELL",
+    "class": "WAR",
+    "levelReq": 17,
+    "price": 50,
+    "effect": {
+      "damage": 70,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:2",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ws_3_1",
+    "name": "WS 3-1",
+    "slot": "SPELL",
+    "class": "WAR",
+    "levelReq": 32,
+    "price": 50,
+    "effect": {
+      "damage": 320,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:3",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ms_1_1",
+    "name": "MS 1-1",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 0,
+    "price": 5,
+    "effect": {
+      "damage": 3,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ms_1_2",
+    "name": "MS 1-2",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 3,
+    "price": 20,
+    "effect": {
+      "damage": 10,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ms_1_3",
+    "name": "MS 1-3",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 8,
+    "price": 50,
+    "effect": {
+      "damage": 25,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ms_2_1",
+    "name": "MS 2-1",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 14,
+    "price": 50,
+    "effect": {
+      "damage": 30,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:2",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ms_2_2",
+    "name": "MS 2-2",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 17,
+    "price": 50,
+    "effect": {
+      "damage": 80,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:2",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ms_2_3",
+    "name": "MS 2-3",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 24,
+    "price": 50,
+    "effect": {
+      "damage": 100,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:2",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ms_3_1",
+    "name": "MS 3-1",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 32,
+    "price": 50,
+    "effect": {
+      "damage": 300,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:3",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_ms_3_2",
+    "name": "MS 3-2",
+    "slot": "SPELL",
+    "class": "MAGE",
+    "levelReq": 35,
+    "price": 50,
+    "effect": {
+      "damage": 400,
+      "target": "ALL",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:3",
+      "spell"
+    ]
+  },
+  {
+    "id": "d_healing_1_1",
+    "name": "Healing 1-1",
+    "slot": "SPELL",
+    "class": "GUARD",
+    "levelReq": 0,
+    "price": 5,
+    "effect": {
+      "heal": 5,
+      "target": "SELF",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "spell",
+      "healing"
+    ]
+  },
+  {
+    "id": "d_healing_1_2",
+    "name": "Healing 1-2",
+    "slot": "SPELL",
+    "class": "GUARD",
+    "levelReq": 10,
+    "price": 15,
+    "effect": {
+      "heal": 15,
+      "target": "SELF",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "spell",
+      "healing"
+    ]
+  },
+  {
+    "id": "d_healing_2_1",
+    "name": "Healing 2-1",
+    "slot": "SPELL",
+    "class": "GUARD",
+    "levelReq": 15,
+    "price": 80,
+    "effect": {
+      "heal": 30,
+      "target": "SELF",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:2",
+      "spell",
+      "healing"
+    ]
+  },
+  {
+    "id": "d_healing_3_1",
+    "name": "Healing 3-1",
+    "slot": "SPELL",
+    "class": "GUARD",
+    "levelReq": 33,
+    "price": 400,
+    "effect": {
+      "heal": 80,
+      "target": "SELF",
+      "cooldown": 2
+    },
+    "tags": [
+      "dungeon:3",
+      "spell",
+      "healing"
+    ]
+  }
+]

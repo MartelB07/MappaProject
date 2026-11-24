@@ -1,0 +1,58 @@
+{
+  "id": "dungeon_01",
+  "name": "Dungeon 1",
+  "order": 1,
+  "difficulties": {
+    "EASY": {
+      "levelReq": 0,
+      "mobLevel": 0,
+      "rewardLevelCap": 2
+    },
+    "MEDIUM": {
+      "levelReq": 2,
+      "mobLevel": 2,
+      "rewardLevelCap": 5
+    },
+    "INSANE": {
+      "levelReq": 5,
+      "mobLevel": 5,
+      "rewardLevelCap": 9
+    },
+    "NIGHTMARE": {
+      "levelReq": 9,
+      "mobLevel": 9,
+      "rewardLevelCap": 15
+    }
+  },
+  "turnLimit": 75,
+  "waves": [
+    [
+      "d1_1",
+      "d1_1",
+      "d1_2"
+    ],
+    [
+      "d1_1",
+      "d1_2",
+      "d1_2"
+    ],
+    [
+      "d1_3",
+      "d1_1",
+      "d1_4",
+      "d1_2"
+    ],
+    [
+      "d1_3",
+      "d1_3",
+      "d1_4",
+      "d1_4"
+    ]
+  ],
+  "boss": "d1_5",
+  "rewardPool": {
+    "tags": [
+      "dungeon:1"
+    ]
+  }
+}

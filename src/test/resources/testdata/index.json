@@ -1,0 +1,14 @@
+{
+  "files": {
+    "rarities":     ["rarities.json"],
+    "difficulties": ["difficulties.json"],
+    "level_curves": ["level_curves.json"],
+    "items":        ["items.json"],
+    "mobs":         ["mobs.json"],
+    "dungeons":     ["dungeon_a.json", "dungeon_b.json"],
+    "regions":      ["regions.json"],
+    "chests":       ["chests.json"],
+    "biomes":       ["biomes.json"],
+    "configs":      ["dungeons_config.json", "adventure_config.json", "explore_config.json"]
+  }
+}

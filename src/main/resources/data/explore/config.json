@@ -1,0 +1,16 @@
+{
+  "id": "explore",
+  "levelCurve": "explore",
+  "startingHealth": 20,
+  "maxHunger": 100,
+  "maxThirst": 100,
+  "hoursPerAction": 2,
+  "hoursPerDay": 24,
+  "nightStartsAt": 20,
+  "nightEndsAt": 6,
+  "starvationDamagePerHour": 2,
+  "foodRestore": 25,
+  "drinkRestore": 30,
+  "inventorySize": 20,
+  "worldSize": 5
+}

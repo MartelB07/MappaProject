@@ -1,0 +1,41 @@
+[
+  { "id": "adv_potion_1", "name": "Potion 1", "slot": "CONSUMABLE", "levelReq": 0, "price": 5,
+    "effect": { "heal": 5 }, "tags": ["adv:potion", "adv:shop"] },
+  { "id": "adv_potion_2", "name": "Potion 2", "slot": "CONSUMABLE", "levelReq": 3, "price": 10,
+    "effect": { "heal": 20 }, "tags": ["adv:potion", "adv:shop"] },
+  { "id": "adv_potion_3", "name": "Potion 3", "slot": "CONSUMABLE", "levelReq": 6, "price": 30,
+    "effect": { "heal": 50 }, "tags": ["adv:potion", "adv:shop"] },
+
+  { "id": "adv_cap",           "name": "Cap",           "slot": "HELMET", "levelReq": 0, "price": 15,  "stats": {},                    "tags": ["adv:helmet", "starter"] },
+  { "id": "adv_wool_hat",      "name": "Wool Hat",      "slot": "HELMET", "levelReq": 2, "price": 20,  "stats": { "MAX_HEALTH": 20 }, "tags": ["adv:helmet", "adv:shop"] },
+  { "id": "adv_silver_helmet", "name": "Silver Helmet", "slot": "HELMET", "levelReq": 4, "price": 40,  "stats": { "MAX_HEALTH": 40 }, "tags": ["adv:helmet", "adv:shop"] },
+  { "id": "adv_gold_helmet",   "name": "Gold Helmet",   "slot": "HELMET", "levelReq": 7, "price": 100, "stats": { "MAX_HEALTH": 70 }, "tags": ["adv:helmet", "adv:shop"] },
+
+  { "id": "adv_shirt",             "name": "Shirt",             "slot": "CHEST", "levelReq": 0, "price": 15,  "stats": {},                    "tags": ["adv:chestplate", "starter"] },
+  { "id": "adv_wool_chestplate",   "name": "Wool Chestplate",   "slot": "CHEST", "levelReq": 2, "price": 20,  "stats": { "MAX_HEALTH": 20 }, "tags": ["adv:chestplate", "adv:shop"] },
+  { "id": "adv_silver_chestplate", "name": "Silver Chestplate", "slot": "CHEST", "levelReq": 4, "price": 40,  "stats": { "MAX_HEALTH": 40 }, "tags": ["adv:chestplate", "adv:shop"] },
+  { "id": "adv_gold_chestplate",   "name": "Gold Chestplate",   "slot": "CHEST", "levelReq": 7, "price": 100, "stats": { "MAX_HEALTH": 70 }, "tags": ["adv:chestplate", "adv:shop"] },
+
+  { "id": "adv_socks",        "name": "Socks",        "slot": "BOOTS", "levelReq": 0, "price": 15,  "stats": {},                    "tags": ["adv:boots", "starter"] },
+  { "id": "adv_wool_boots",   "name": "Wool Boots",   "slot": "BOOTS", "levelReq": 2, "price": 20,  "stats": { "MAX_HEALTH": 10 }, "tags": ["adv:boots", "adv:shop"] },
+  { "id": "adv_silver_boots", "name": "Silver Boots", "slot": "BOOTS", "levelReq": 4, "price": 40,  "stats": { "MAX_HEALTH": 20 }, "tags": ["adv:boots", "adv:shop"] },
+  { "id": "adv_gold_boots",   "name": "Gold Boots",   "slot": "BOOTS", "levelReq": 7, "price": 100, "stats": { "MAX_HEALTH": 50 }, "tags": ["adv:boots", "adv:shop"] },
+
+  { "id": "adv_gloves",      "name": "Gloves",      "slot": "WEAPON", "levelReq": 0, "price": 15,  "stats": { "DAMAGE": 5 },  "tags": ["adv:weapon", "starter"] },
+  { "id": "adv_basic_knife", "name": "Basic Knife", "slot": "WEAPON", "levelReq": 1, "price": 15,  "stats": { "DAMAGE": 10 }, "tags": ["adv:weapon", "adv:shop"] },
+  { "id": "adv_sword",       "name": "Sword",       "slot": "WEAPON", "levelReq": 2, "price": 40,  "stats": { "DAMAGE": 15 }, "tags": ["adv:weapon", "adv:shop"] },
+  { "id": "adv_long_sword",  "name": "Long Sword",  "slot": "WEAPON", "levelReq": 4, "price": 60,  "stats": { "DAMAGE": 25 }, "tags": ["adv:weapon", "adv:shop"] },
+  { "id": "adv_dual_swords", "name": "Dual Swords", "slot": "WEAPON", "levelReq": 7, "price": 80,  "stats": { "DAMAGE": 35 }, "tags": ["adv:weapon", "adv:shop"] },
+  { "id": "adv_scythe",      "name": "Scythe",      "slot": "WEAPON", "levelReq": 8, "price": 150, "stats": { "DAMAGE": 50 }, "tags": ["adv:weapon", "adv:shop"] },
+
+  { "id": "adv_key_1",  "name": "Key 1",  "slot": "KEY", "levelReq": 1,  "price": 5,  "tags": ["adv:key"] },
+  { "id": "adv_key_2",  "name": "Key 2",  "slot": "KEY", "levelReq": 2,  "price": 10, "tags": ["adv:key"] },
+  { "id": "adv_key_3",  "name": "Key 3",  "slot": "KEY", "levelReq": 3,  "price": 10, "tags": ["adv:key"] },
+  { "id": "adv_key_4",  "name": "Key 4",  "slot": "KEY", "levelReq": 4,  "price": 20, "tags": ["adv:key"] },
+  { "id": "adv_key_5",  "name": "Key 5",  "slot": "KEY", "levelReq": 5,  "price": 20, "tags": ["adv:key"] },
+  { "id": "adv_key_6",  "name": "Key 6",  "slot": "KEY", "levelReq": 6,  "price": 20, "tags": ["adv:key"] },
+  { "id": "adv_key_7",  "name": "Key 7",  "slot": "KEY", "levelReq": 7,  "price": 30, "tags": ["adv:key"] },
+  { "id": "adv_key_8",  "name": "Key 8",  "slot": "KEY", "levelReq": 8,  "price": 30, "tags": ["adv:key"] },
+  { "id": "adv_key_9",  "name": "Key 9",  "slot": "KEY", "levelReq": 9,  "price": 30, "tags": ["adv:key"] },
+  { "id": "adv_key_10", "name": "Key 10", "slot": "KEY", "levelReq": 10, "price": 50, "tags": ["adv:key"] }
+]

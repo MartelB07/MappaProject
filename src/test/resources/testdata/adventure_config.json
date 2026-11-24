@@ -1,0 +1,30 @@
+{
+  "id": "adventure",
+  "levelCurve": "test",
+  "startRegion": "t_home",
+  "inventorySize": 5,
+  "startingGold": 0,
+  "sellPercent": 75,
+  "shopTag": "a:shop",
+  "potionTag": "a:potion",
+  "healthByLevel": [10, 20, 30, 40],
+  "goldPerLevelUp": 10,
+  "startingEquipment": ["t_club"],
+  "startingItems": [ { "id": "t_potion", "count": 3 } ],
+  "combat": {
+    "critChancePercent": 0,
+    "critMultiplier": 2,
+    "damageVariance": [1.0, 1.0],
+    "escapeChancePercent": 50,
+    "enhancedChancePercent": 100,
+    "enhancedMaxLevelsAbove": 2,
+    "monsterChestRewardMultiplier": [1.0, 2.0]
+  },
+  "reviveCostPerLevel": 35,
+  "chests": {
+    "searchCountdownStart": 0,
+    "searchCountdownAfterOpen": [2, 2],
+    "countdownPerWin": [1, 1],
+    "keyDropChancePercent": 100
+  }
+}

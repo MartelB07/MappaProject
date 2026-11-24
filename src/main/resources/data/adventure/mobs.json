@@ -1,0 +1,20 @@
+[
+  { "id": "adv_vecno", "name": "Vecno", "baseLevel": 0,
+    "stats": { "MAX_HEALTH": { "base": 10, "perLevel": 0.25 }, "DAMAGE": { "base": 2, "perLevel": 0.15 }, "DODGE_CHANCE": 5 },
+    "exp": 1, "gold": 2 },
+  { "id": "adv_grinch", "name": "Grinch", "baseLevel": 1,
+    "stats": { "MAX_HEALTH": { "base": 30, "perLevel": 0.25 }, "DAMAGE": { "base": 5, "perLevel": 0.15 }, "DODGE_CHANCE": 5 },
+    "exp": 2, "gold": 5 },
+  { "id": "adv_pinocchio", "name": "Pinocchio", "baseLevel": 3,
+    "stats": { "MAX_HEALTH": { "base": 70, "perLevel": 0.25 }, "DAMAGE": { "base": 20, "perLevel": 0.15 }, "DODGE_CHANCE": 5 },
+    "exp": 4, "gold": 10 },
+  { "id": "adv_french_fry", "name": "French Fry", "baseLevel": 7,
+    "stats": { "MAX_HEALTH": { "base": 100, "perLevel": 0.25 }, "DAMAGE": { "base": 40, "perLevel": 0.15 }, "DODGE_CHANCE": 5 },
+    "exp": 6, "gold": 20 },
+  { "id": "adv_homeless_man", "name": "Homeless Man", "baseLevel": 9,
+    "stats": { "MAX_HEALTH": { "base": 300, "perLevel": 0.25 }, "DAMAGE": { "base": 70, "perLevel": 0.15 }, "DODGE_CHANCE": 5 },
+    "exp": 10, "gold": 50 },
+  { "id": "adv_boss", "name": "Boss", "baseLevel": 10, "boss": true,
+    "stats": { "MAX_HEALTH": { "base": 600, "perLevel": 0.25 }, "DAMAGE": { "base": 120, "perLevel": 0.15 }, "DODGE_CHANCE": 5 },
+    "exp": 20, "gold": 140 }
+]

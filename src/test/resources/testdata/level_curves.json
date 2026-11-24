@@ -1,0 +1,4 @@
+{
+  "test":  { "thresholds": [0, 5, 10, 20] },
+  "short": { "thresholds": [0, 3, 6] }
+}

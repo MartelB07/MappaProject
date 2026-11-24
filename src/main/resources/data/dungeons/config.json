@@ -1,0 +1,36 @@
+{
+  "id": "dungeons",
+  "levelCurve": "dungeons",
+  "startingHealth": 10,
+  "healthPerPoint": 2,
+  "damagePerPoint": 1,
+  "pointsPerLevel": 1,
+  "resetCostPerPoint": 25,
+  "inventorySize": 60,
+  "sellPercent": 75,
+  "startingGold": 0,
+  "startingItems": ["d_starter_sword", "d_starter_staff", "d_war_spell", "d_mage_spell"],
+
+  "runModes": [
+    {
+      "id": "REGULAR",
+      "name": "Regular",
+      "color": "GREEN",
+      "lives": 0,
+      "deathTurnPenalty": 10,
+      "respawnHealthPercent": 100,
+      "rewardItems": 2,
+      "description": "Die and respawn at the start of your current room, but lose 10 turns. Win 2 items."
+    },
+    {
+      "id": "HARDCORE",
+      "name": "Hardcore",
+      "color": "RED",
+      "lives": 1,
+      "deathTurnPenalty": 0,
+      "respawnHealthPercent": 100,
+      "rewardItems": 3,
+      "description": "One life. Dying ends the run. Win 3 items."
+    }
+  ]
+}

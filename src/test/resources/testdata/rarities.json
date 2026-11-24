@@ -1,0 +1,5 @@
+[
+  { "id": "COMMON",    "name": "Common",    "color": "WHITE",  "rank": 0, "weight": 60, "multiplier": [1.00, 1.15] },
+  { "id": "RARE",      "name": "Rare",      "color": "BLUE",   "rank": 1, "weight": 30, "multiplier": [1.15, 1.50] },
+  { "id": "LEGENDARY", "name": "Legendary", "color": "GOLD",   "rank": 2, "weight": 10, "multiplier": [2.00, 2.50] }
+]

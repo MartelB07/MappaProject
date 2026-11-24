@@ -1,0 +1,13 @@
+[
+  { "id": "t_grunt", "name": "Grunt", "baseLevel": 1,
+    "stats": { "MAX_HEALTH": { "base": 10, "perLevel": 0.5 }, "DAMAGE": { "base": 4, "perLevel": 0.5 } },
+    "exp": 2, "gold": 3, "attackEvery": 2 },
+  { "id": "t_boss", "name": "Big Boss", "baseLevel": 1, "boss": true,
+    "stats": { "MAX_HEALTH": 20, "DAMAGE": 6 },
+    "exp": 5, "gold": [10, 10], "attackEvery": 3 },
+  { "id": "t_rat", "name": "Rat", "baseLevel": 0,
+    "stats": { "MAX_HEALTH": { "base": 6, "perLevel": 0.25 }, "DAMAGE": { "base": 2, "perLevel": 0.25 } },
+    "exp": 1, "gold": 1 },
+  { "id": "t_king", "name": "Rat King", "baseLevel": 3, "boss": true,
+    "stats": { "MAX_HEALTH": 30, "DAMAGE": 5 }, "exp": 10, "gold": 50 }
+]

@@ -1,0 +1,9 @@
+[
+  { "id": "adv_chest_health",      "name": "Chest of Health",      "kind": "CONSUMABLES", "weight": 2, "itemTags": ["adv:potion"],     "amount": [1, 5] },
+  { "id": "adv_chest_helmets",     "name": "Chest of Helmets",     "kind": "ITEMS",       "weight": 1, "itemTags": ["adv:helmet"] },
+  { "id": "adv_chest_chestplates", "name": "Chest of Chestplates", "kind": "ITEMS",       "weight": 1, "itemTags": ["adv:chestplate"] },
+  { "id": "adv_chest_boots",       "name": "Chest of Boots",       "kind": "ITEMS",       "weight": 1, "itemTags": ["adv:boots"] },
+  { "id": "adv_chest_weapons",     "name": "Chest of Weapons",     "kind": "ITEMS",       "weight": 1, "itemTags": ["adv:weapon"] },
+  { "id": "adv_chest_gold",        "name": "Chest of Gold",        "kind": "GOLD",        "weight": 1, "amount": [1, 10] },
+  { "id": "adv_chest_monster",     "name": "Chest of Monsters",    "kind": "MONSTER",     "weight": 1 }
+]

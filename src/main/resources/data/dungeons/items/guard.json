@@ -1,0 +1,226 @@
+[
+  {
+    "id": "d_guard_helmet_1_1",
+    "name": "Guard Helmet 1-1",
+    "slot": "HELMET",
+    "class": "GUARD",
+    "levelReq": 0,
+    "price": 10,
+    "stats": {
+      "MAX_HEALTH": 5,
+      "DEFENSE": 1
+    },
+    "tags": [
+      "dungeon:1",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_helmet_1_2",
+    "name": "Guard Helmet 1-2",
+    "slot": "HELMET",
+    "class": "GUARD",
+    "levelReq": 10,
+    "price": 90,
+    "stats": {
+      "MAX_HEALTH": 25,
+      "DEFENSE": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_helmet_2_1",
+    "name": "Guard Helmet 2-1",
+    "slot": "HELMET",
+    "class": "GUARD",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 35,
+      "DEFENSE": 4
+    },
+    "tags": [
+      "dungeon:2",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_helmet_2_2",
+    "name": "Guard Helmet 2-2",
+    "slot": "HELMET",
+    "class": "GUARD",
+    "levelReq": 20,
+    "price": 170,
+    "stats": {
+      "MAX_HEALTH": 40,
+      "DEFENSE": 6
+    },
+    "tags": [
+      "dungeon:2",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_helmet_2_3",
+    "name": "Guard Helmet 2-3",
+    "slot": "HELMET",
+    "class": "GUARD",
+    "levelReq": 25,
+    "price": 210,
+    "stats": {
+      "MAX_HEALTH": 65,
+      "DEFENSE": 10
+    },
+    "tags": [
+      "dungeon:2",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_helmet_3_1",
+    "name": "Guard Helmet 3-1",
+    "slot": "HELMET",
+    "class": "GUARD",
+    "levelReq": 33,
+    "price": 274,
+    "stats": {
+      "MAX_HEALTH": 80,
+      "DEFENSE": 14
+    },
+    "tags": [
+      "dungeon:3",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_helmet_3_2",
+    "name": "Guard Helmet 3-2",
+    "slot": "HELMET",
+    "class": "GUARD",
+    "levelReq": 41,
+    "price": 338,
+    "stats": {
+      "MAX_HEALTH": 120,
+      "DEFENSE": 18
+    },
+    "tags": [
+      "dungeon:3",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_armor_1_1",
+    "name": "Guard Armor 1-1",
+    "slot": "CHEST",
+    "class": "GUARD",
+    "levelReq": 0,
+    "price": 10,
+    "stats": {
+      "MAX_HEALTH": 5,
+      "DEFENSE": 1
+    },
+    "tags": [
+      "dungeon:1",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_armor_1_2",
+    "name": "Guard Armor 1-2",
+    "slot": "CHEST",
+    "class": "GUARD",
+    "levelReq": 10,
+    "price": 90,
+    "stats": {
+      "MAX_HEALTH": 25,
+      "DEFENSE": 2
+    },
+    "tags": [
+      "dungeon:1",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_armor_2_1",
+    "name": "Guard Armor 2-1",
+    "slot": "CHEST",
+    "class": "GUARD",
+    "levelReq": 17,
+    "price": 146,
+    "stats": {
+      "MAX_HEALTH": 35,
+      "DEFENSE": 4
+    },
+    "tags": [
+      "dungeon:2",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_armor_2_2",
+    "name": "Guard Armor 2-2",
+    "slot": "CHEST",
+    "class": "GUARD",
+    "levelReq": 20,
+    "price": 170,
+    "stats": {
+      "MAX_HEALTH": 40,
+      "DEFENSE": 6
+    },
+    "tags": [
+      "dungeon:2",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_armor_2_3",
+    "name": "Guard Armor 2-3",
+    "slot": "CHEST",
+    "class": "GUARD",
+    "levelReq": 25,
+    "price": 210,
+    "stats": {
+      "MAX_HEALTH": 65,
+      "DEFENSE": 10
+    },
+    "tags": [
+      "dungeon:2",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_armor_3_1",
+    "name": "Guard Armor 3-1",
+    "slot": "CHEST",
+    "class": "GUARD",
+    "levelReq": 33,
+    "price": 274,
+    "stats": {
+      "MAX_HEALTH": 80,
+      "DEFENSE": 14
+    },
+    "tags": [
+      "dungeon:3",
+      "set:guard"
+    ]
+  },
+  {
+    "id": "d_guard_armor_3_2",
+    "name": "Guard Armor 3-2",
+    "slot": "CHEST",
+    "class": "GUARD",
+    "levelReq": 41,
+    "price": 338,
+    "stats": {
+      "MAX_HEALTH": 120,
+      "DEFENSE": 18
+    },
+    "tags": [
+      "dungeon:3",
+      "set:guard"
+    ]
+  }
+]
