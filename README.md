@@ -18,6 +18,13 @@ $env:JAVA_HOME = "$env:USERPROFILE\.jdks\openjdk-24.0.2+12-54"
 ```
 
 ## Build, test, play
+Quickest way to play (builds whatever changed, then starts the game):
+```powershell
+.\play                # or: .\play --dev   /   .\play --seed=42
+```
+Set `MAPPA_NO_COLOR=1` first if your terminal shows codes like `[32m` instead of colors.
+
+Or step by step:
 ```powershell
 .\gradlew.bat test                 # run all tests (report: build\reports\tests\test\index.html)
 .\gradlew.bat jar                  # build\libs\MappaProject-0.2.0.jar (includes Gson)
