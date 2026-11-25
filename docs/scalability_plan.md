@@ -196,6 +196,115 @@ Open-world characteristics are free-form `traits` plus `survival`/`hazards` bloc
 
 ---
 
+## Save system (phase 6)
+
+Each game mode has its own save slots (3 by default). Opening a mode offers **New game**, **Continue** for each
+filled slot, or **Delete a save**. The game saves automatically and has a manual "Save game" option.
+
+### Files
+```
+saves/                          (git-ignored; set with the --saves=DIR launch flag, play.bat uses <project>/saves)
+  adventure/slot1.json slot2.json slot3.json
+  dungeons/ slot1.json ...
+  explore/  slot1.json ...
+```
+Every file has the same envelope. Only `data` differs by mode:
+```json
+{
+  "format": 1,
+  "mode": "adventure",
+  "savedAt": "2026-11-24T19:40:00",
+  "summary": "Hero - Level 7 - Old Town",
+  "data": {
+    "player": { "name": "Hero", "level": 7, "exp": 12, "health": 95, "gold": 340 },
+    "location": "old_town",
+    "equipment": { "WEAPON": { "item": "adv_long_sword", "id": "9f2c..." } },
+    "inventory": [ { "item": "adv_potion_2", "id": "...", "count": 8 } ],
+    "progress": { "chestCountdown": 2, "hasWon": false }
+  }
+}
+```
+Rolled loot also stores `"rarity": "EPIC", "multiplier": 1.82`, so it comes back exactly as rolled.
+
+### What each mode saves
+| Mode | Saved |
+|---|---|
+| Adventure | name, level, EXP, current health, gold, equipped gear, inventory, region, chest countdown, whether the boss was beaten |
+| Dungeons | name, level, EXP, attribute points (spent and unspent), gold, gear, both spell slots, inventory, cleared dungeons (keeps unlocks) |
+| Explore | day and hour, health, hunger, thirst, inventory, the world (list of biome ids), current position |
+
+### Rules
+- **Saves store ids, not stats.** Stats are rebuilt from the current JSON content when a save loads, so rebalancing an item also updates old saves. Max health and damage come from re-equipping the saved gear.
+- **Missing content never crashes a load.** An unknown item is skipped, an unknown region sends you to the start region, and a piece of gear above your level goes back to the inventory. The player sees a short list of what was skipped.
+- **Safe writes.** The file is written to `slotN.json.tmp` and then moved over the old file, so a crash mid-save can't corrupt a slot.
+- **Unreadable files** show up as "(unreadable save)" and can be deleted. Saves from a newer version of the game are refused rather than loaded wrongly.
+- **Format versions.** `"format"` is bumped when the save layout changes. `SaveStore.withMigration(from, fn)` upgrades older files when they load.
+- **When it saves:**
+  - Adventure: after fights you win, travel, shopping, chests, inventory changes, and on exit.
+  - Dungeons: in the lobby after every action, including right after a run. Never mid-run, so reloading can't undo a Hardcore death.
+  - Explore: at the start of each new in-game day, and on exit.
+- **Death.** Each mode's config has `"saves": { "slots": 3, "deleteOnDeath": false }`. In Adventure, dying keeps your last save, so you can continue from before the fight. In Explore (`deleteOnDeath: true`), dying deletes the slot, since surviving is the whole point.
+
+### Code
+| Piece | Where | Job |
+|---|---|---|
+| `SaveStore` | `core/save` | Slot files for one mode: list, load, save, delete, safe writes, format versions and migrations |
+| `SaveSettings` | `core/save` | Reads `"saves"` from a mode config (slot count, delete on death) |
+| `SaveMenu` | `core/save` | The shared New game / Continue / Delete screen and the slot picker |
+| `ItemCodec` | `core/save` | Item instances, inventories and equipment to and from JSON, collecting warnings |
+| `AdventureSave`, `DungeonsSave`, `ExploreSave` | each mode | What that mode writes and how it restores it |
+
+A future mode adds a `<Mode>Save` class and a `"saves"` block in its config. The store, menu and codec are shared.
+
+---
+
+## Text UI style
+
+All player-facing output goes through one shared layer in `core/ui`, so every mode looks consistent and a
+new mode gets the same style for free.
+
+| Piece | Job |
+|---|---|
+| `Ui` | One per mode, wrapping `GameIO`. `banner(...)` (boxed, for big moments), `event(...)` / `success` / `warn` / `danger` / `reward` / `muted` (one line with a symbol), `header(...)` (the status strip above menus), `bar(...)` (`[██████░░░░] 72/100`), `title(...)` (launcher logo). |
+| `Tone` | `INFO, SUCCESS, WARNING, DANGER, REWARD, MAGIC, MUTED`: each has a color and a symbol (`• ✓ ▲ ✗ ★ ✦ ·`, ASCII `- + ! x * ~ -`). |
+| `Glyphs` | Box, line and bar characters. Unicode when the terminal is UTF-8, plain ASCII otherwise (`-Dmappa.ascii=true` or `MAPPA_ASCII=1` forces ASCII). |
+| `Text` | ANSI-aware `visibleWidth`, `padRight`, `wrap`: color codes never count toward widths, so boxes stay aligned. |
+| `Menu` | `[1] Label` options with the number in the mode's accent color. Lists of 6+ become two aligned columns. `[0]` is always listed last. Prompt is `> `. |
+
+**Rules**
+- **Boxes size themselves.** A banner is as wide as its widest line after formatting ("+40 gold" vs "+10000 gold"), and every line is padded to that width. Lines longer than the terminal (`COLUMNS`, default 80) wrap inside the box. `UiTest` checks alignment for both glyph sets, colored text and very long lines.
+- **Only single-column symbols.** No emoji, because many terminals draw emoji two columns wide and that would break the borders.
+- **Clear after every input.** `ConsoleIO.readLine()` wipes the screen and scroll-back (`ESC[H ESC[2J ESC[3J`) after each line is typed. The player sees only the results of their last input, then the current header and menu. In terminals that can't clear (IDE run windows, pipes), a thin divider is printed instead. `-Dmappa.clear=true|false` overrides. `ScriptedIO` records clears, so tests can check exactly what was on screen (`screenBefore(n)`).
+- **Mode accents:** Adventure green, Dungeons purple, Explore cyan, launcher gold (`ACCENT` constant in each game class).
+- **Flavor text is data.** Regions, dungeons and biomes take an optional `"description"`, shown in the arrival/entry banners.
+
+**When to use what (for new features)**
+
+| Moment | Use |
+|---|---|
+| Something big happened: arrival, level up, victory, death, dungeon cleared, new day, loot list | `ui.banner(tone, title, lines...)` |
+| A normal result: hit, purchase, pickup, warning | `ui.success / warn / danger / reward / muted(text)` |
+| The state of things above a menu | `ui.header(title, lines...)` with `ui.bar(...)` |
+
+## Future: command input (on hold)
+
+Numbered menus stay for now. Later, players should also be able to type commands such as `/fight`,
+`/use potion 2`, `/travel old town`, `/equip silver helmet` or `/help`. The plan, so the current code doesn't block it:
+
+1. **Menus become lists of actions.** Each option is an `(actionId, label, aliases)` entry, e.g.
+   `("fight", "Fight", ["attack", "f"])`, instead of a bare label. Game code switches on the action id, not
+   the position. `AdventureGame` already switches on labels, which is most of the way there.
+2. **`CommandParser`** (in `core/io`) turns input into an `actionId` plus arguments:
+   - a number → the numbered option, exactly like today;
+   - `/word args...` → the action whose id or alias matches `word`.
+   Both work at the same time, so nothing breaks for players who like numbers.
+3. **Arguments are matched by name**, case-insensitive with prefix matching: `/travel old` → Old Town, `/use pot` → the potion you own. Ambiguous matches list the options. Matching uses the names already in the content registry.
+4. **`/help`** lists the commands available on the current screen (generated from the menu's actions), plus global ones (`/stats`, `/inventory`, `/save`, `/quit`).
+5. **Testing:** `ScriptedIO` can feed commands just like numbers, so each command gets the same scripted tests as the menus.
+6. **Rollout:** one mode at a time, with a config flag (`"commands": true`). The `Menu` API stays, so untouched screens keep working.
+
+---
+
 ## Input, randomness and state (makes testing possible)
 - One `GameIO` is passed to every mode. `ConsoleIO` holds the only `Scanner` (fixes **ST-10**). Tests use `ScriptedIO`.
 - `Menu` handles numbered choices, confirms and amounts with min/max checks in one place (fixes **D-04** and the copy-paste in **ST-07**).
@@ -209,8 +318,7 @@ Open-world characteristics are free-form `traits` plus `survival`/`hazards` bloc
 ## Phased migration
 Each phase ends with `./gradlew test` passing and the game still playable.
 
-**Progress (2026-11-24):** phases 0–5 are done and all 150 tests pass. Phase 6 (save/load, quests) is still open.
-Nothing has been committed to git yet.
+**Progress (2026-11-25):** phases 0–6 are done (save/load included) and all 188 tests pass.
 
 | Phase | Work | Issues closed |
 |---|---|---|
@@ -220,7 +328,8 @@ Nothing has been committed to git yet.
 | **3. Dungeons on core** | `DungeonPlayer`, `DungeonsGame`, `DungeonRun`, `RewardRoller`, `AttackTelegraph`. Delete the old `MappaDungeons` package. | D-01…D-05, D-07…D-14, D-16…D-18 |
 | **4. Adventure on core** | Move Adventure data into JSON. Add `AdventurePlayer`, `AdventureCombat`, `RegionGraph`, `Shop`, `ChestService`. Delete the old package. | A-01…A-13, ST-02, ST-05, ST-11 |
 | **5. Explore skeleton** | `biomes.json`, `resources.json`, `WorldGenerator`, a basic survival day loop. | — |
-| **6. Later** | Save/load (JSON: player stats, level, wallet, item instances, unlocked dungeons). Quest system (`quests.json`: objectives on mob/item/region ids). Bonus-reward-every-5-dungeons from the roadmap. | ST-14 |
+| **6. Save/load** | `SaveStore`, `SaveMenu`, `ItemCodec`, and a save class per mode, as described in [Save system](#save-system-phase-6). | ST-14 |
+| **7. Later** | Quest system (`quests.json`: objectives on mob/item/region ids). Bonus reward every 5 dungeons, from the roadmap. | — |
 
 ### Adding content after the migration
 | To add… | Do this |

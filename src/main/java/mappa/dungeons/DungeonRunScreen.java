@@ -1,9 +1,11 @@
 package mappa.dungeons;
 
 import mappa.core.io.Ansi;
-import mappa.core.io.GameIO;
 import mappa.core.io.Menu;
 import mappa.core.items.ItemInstance;
+import mappa.core.ui.Text;
+import mappa.core.ui.Tone;
+import mappa.core.ui.Ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +14,13 @@ import java.util.List;
 final class DungeonRunScreen {
     private final DungeonRun run;
     private final Menu menu;
-    private final GameIO io;
+    private final Ui ui;
     private final DungeonInventoryScreen inventory;
 
     DungeonRunScreen(DungeonRun run, Menu menu) {
         this.run = run;
         this.menu = menu;
-        this.io = menu.io();
+        this.ui = menu.ui();
         this.inventory = new DungeonInventoryScreen(run.player(), menu);
     }
 
@@ -26,15 +28,15 @@ final class DungeonRunScreen {
         banner();
         while (run.inProgress()) {
             showRoom();
-            List<String> options = new ArrayList<>(List.of("Attack", "Use Spell", "Open Inventory (changing gear uses a turn)",
-                    "Open Attributes"));
+            List<String> options = new ArrayList<>(List.of("Attack", "Use Spell",
+                    "Open Inventory (changing gear uses a turn)", "Open Attributes"));
             boolean canMove = run.canMoveOn();
             if (canMove) {
                 options.add("Move On");
             } else if (run.isBossRoom()) {
                 options.add("Dodge");
             }
-            int c = menu.chooseFrom("", options, "leave the dungeon");
+            int c = menu.chooseFrom("Your move:", options, "leave the dungeon");
             switch (c) {
                 case Menu.CANCEL -> {
                     if (menu.confirm("Leave the dungeon? You won't get any rewards.")) {
@@ -63,45 +65,55 @@ final class DungeonRunScreen {
     }
 
     private void banner() {
-        String title = "  " + run.dungeon().name() + "  " + run.difficulty().colored() + "  " + run.mode().colored() + "  ";
-        io.println();
-        io.println("--------------------------------------------");
-        io.println(title);
-        io.println("  " + run.mode().description());
-        io.println("--------------------------------------------");
+        List<String> lines = new ArrayList<>();
+        if (!run.dungeon().description().isEmpty()) {
+            lines.add(run.dungeon().description());
+        }
+        lines.add("Difficulty: " + run.difficulty().colored() + "   Mode: " + run.mode().colored());
+        lines.add(run.mode().description());
+        lines.add("Turns: " + run.turnsLeft() + "   Rooms: " + run.roomCount());
+        ui.banner(Tone.MAGIC, "Entering " + run.dungeon().name(), lines);
         menu.pause();
     }
 
     private void showRoom() {
-        io.println();
         String lives = run.livesLeft() < 0 ? "unlimited" : String.valueOf(run.livesLeft());
-        io.println("TURNS LEFT: " + run.turnsLeft() + "   ROOM: " + (run.room() + 1) + "/" + run.roomCount()
-                + "   LIVES: " + lives);
-        io.println("--------------------------------------------");
-        for (DungeonRun.RoomMob m : run.mobs()) {
-            if (!m.mob().isAlive()) {
-                continue;
-            }
-            io.println((m.mob().isBoss() ? Ansi.color(" BOSS ", Ansi.Color.RED) : " ") + m.mob().label()
-                    + "  Health: " + Ansi.health(m.mob().health(), m.mob().maxHealth()));
-            io.println("   Attack: " + m.telegraph());
-        }
-        if (run.roomCleared() && run.canMoveOn()) {
-            io.println(Ansi.color(" Room cleared! Move on when you're ready.", Ansi.Color.GREEN));
-        }
-        io.println("--------------------------------------------");
+        Ansi.Color turnColor = run.turnsLeft() <= 10 ? Ansi.Color.RED
+                : run.turnsLeft() <= 25 ? Ansi.Color.YELLOW : Ansi.Color.DEFAULT;
         DungeonPlayer p = run.player();
-        io.println(" [Level " + p.level() + "] " + p.name() + "  Health: " + Ansi.health(p.health().current(), p.health().max()));
+
+        List<DungeonRun.RoomMob> alive = run.aliveMobs();
+        int nameWidth = Text.visibleWidth(p.name()) + 10;
+        for (DungeonRun.RoomMob m : alive) {
+            nameWidth = Math.max(nameWidth, Text.visibleWidth(m.mob().label()) + (m.mob().isBoss() ? 5 : 0));
+        }
+        List<String> lines = new ArrayList<>();
+        lines.add("Turns left " + Ansi.bold(String.valueOf(run.turnsLeft()), turnColor)
+                + "   Room " + (run.room() + 1) + "/" + run.roomCount() + "   Lives " + lives);
+        lines.add("");
+        for (DungeonRun.RoomMob m : alive) {
+            String name = (m.mob().isBoss() ? Ansi.bold("BOSS ", Ansi.Color.RED) : "") + m.mob().label();
+            lines.add(Text.padRight(name, nameWidth) + "  " + ui.bar(m.mob().health(), m.mob().maxHealth(), 12)
+                    + "  " + m.telegraph(ui.glyphs()));
+        }
+        if (alive.isEmpty() && run.canMoveOn()) {
+            lines.add(Ansi.color(ui.symbol(Tone.SUCCESS) + " Room cleared! Move on when you're ready.",
+                    Ansi.Color.GREEN));
+        }
+        lines.add("");
+        lines.add(Text.padRight(Ansi.bold("[Level " + p.level() + "] " + p.name()), nameWidth) + "  "
+                + ui.bar(p.health().current(), p.health().max(), 12));
+        ui.header(run.dungeon().name() + (run.isBossRoom() ? "  -  Boss Room" : ""), lines);
     }
 
     private void attack() {
         if (run.player().attackDamage() <= 0) {
-            io.println("You have no weapon equipped.");
+            ui.warn("You have no weapon equipped.");
             return;
         }
         List<DungeonRun.RoomMob> alive = run.aliveMobs();
         if (alive.isEmpty()) {
-            io.println("No mob to attack.");
+            ui.warn("No mob to attack.");
             return;
         }
         List<String> labels = new ArrayList<>();
@@ -122,12 +134,13 @@ final class DungeonRunScreen {
             if (spell != null) {
                 int wait = run.cooldownRemaining(spell);
                 labels.add(spell.displayName() + "  (" + spell.statSummary() + ")"
-                        + (wait > 0 ? Ansi.color("  ready in " + wait + " turn(s)", Ansi.Color.GRAY) : ""));
+                        + (wait > 0 ? Ansi.color("  ready in " + wait + " turn(s)", Ansi.Color.GRAY)
+                        : Ansi.color("  ready", Ansi.Color.GREEN)));
                 slots.add(s);
             }
         }
         if (labels.isEmpty()) {
-            io.println("You have no spells equipped.");
+            ui.warn("You have no spells equipped.");
             return;
         }
         int pick = menu.chooseFrom("Which spell would you like to use?", labels, "cancel");
@@ -137,23 +150,25 @@ final class DungeonRunScreen {
     }
 
     private void summary() {
-        io.println();
         switch (run.status()) {
             case CLEARED -> {
-                io.println(Ansi.color("Dungeon cleared!", Ansi.Color.GREEN) + " (" + run.mode().name() + ": "
-                        + run.mode().rewardItems() + " reward items)");
+                List<String> lines = new ArrayList<>();
+                lines.add(run.mode().name() + " run: " + run.mode().rewardItems() + " reward items");
                 for (ItemInstance i : run.rewards()) {
-                    io.println("You received " + DungeonInventoryScreen.describe(i, 1));
+                    lines.add(ui.symbol(Tone.REWARD) + " " + DungeonInventoryScreen.describe(i, 1));
                 }
                 for (ItemInstance i : run.rewardsLost()) {
-                    io.println(Ansi.color("No inventory space for " + i.displayName(), Ansi.Color.RED));
+                    lines.add(Ansi.color("No inventory space for " + i.displayName(), Ansi.Color.RED));
                 }
+                ui.banner(Tone.REWARD, run.dungeon().name() + " cleared!", lines);
             }
-            case DIED -> io.println("You were defeated. No rewards this time.");
-            case OUT_OF_TURNS -> io.println("You ran out of turns. No rewards this time.");
-            case ABANDONED -> io.println("You left the dungeon.");
+            case DIED -> ui.banner(Tone.DANGER, "Defeated", "You were defeated in " + run.dungeon().name()
+                    + ". No rewards this time.");
+            case OUT_OF_TURNS -> ui.banner(Tone.DANGER, "Out of turns",
+                    "You ran out of turns in " + run.dungeon().name() + ". No rewards this time.");
+            case ABANDONED -> ui.warn("You left the dungeon.");
             default -> { }
         }
-        io.println("Returning to lobby...");
+        ui.muted("Returning to lobby...");
     }
 }

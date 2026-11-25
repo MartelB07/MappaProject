@@ -1,5 +1,5 @@
 [
-  { "id": "forest", "name": "Whispering Forest", "danger": [1, 4], "weight": 3,
+  { "id": "forest", "name": "Whispering Forest", "description": "Tall trees, fresh water, and wolves after dark.", "danger": [1, 4], "weight": 3,
     "resources": [
       { "item": "res_wood",    "weight": 5, "yield": [1, 3] },
       { "item": "res_berries", "weight": 3, "yield": [1, 4] },
@@ -10,7 +10,7 @@
     "survival": { "hungerDrainPerHour": 2, "thirstDrainPerHour": 3 },
     "traits": ["shelter", "fresh_water"] },
 
-  { "id": "desert", "name": "Red Dune Desert", "danger": [2, 6], "weight": 2,
+  { "id": "desert", "name": "Red Dune Desert", "description": "Endless sand. Water is precious and the sun shows no mercy.", "danger": [2, 6], "weight": 2,
     "resources": [
       { "item": "res_stone",        "weight": 4, "yield": [1, 2] },
       { "item": "res_cactus_fruit", "weight": 2, "yield": [1, 2] }

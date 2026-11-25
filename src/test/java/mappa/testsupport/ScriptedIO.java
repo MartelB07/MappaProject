@@ -14,6 +14,9 @@ import java.util.Deque;
 public class ScriptedIO implements GameIO {
     private final Deque<String> lines;
     private final StringBuilder out = new StringBuilder();
+    private int lastClear;
+    private int clears;
+    private final java.util.List<String> screensBeforeInput = new java.util.ArrayList<>();
 
     public ScriptedIO(String... lines) {
         this.lines = new ArrayDeque<>(Arrays.asList(lines));
@@ -33,8 +36,10 @@ public class ScriptedIO implements GameIO {
         if (lines.isEmpty()) {
             throw new InputClosedException("Script ran out of input. Output so far:\n" + tail());
         }
+        screensBeforeInput.add(screen());
         String line = lines.poll();
         out.append(line).append('\n');
+        clear(); // like the real console: the screen is wiped after every input
         return line;
     }
 
@@ -43,12 +48,41 @@ public class ScriptedIO implements GameIO {
         out.append(text);
     }
 
+    @Override
+    public void clear() {
+        lastClear = out.length();
+        clears++;
+    }
+
+    /** Everything ever printed (clears don't remove anything from this log). */
     public String output() {
         return out.toString();
     }
 
     public boolean outputContains(String text) {
         return out.indexOf(text) >= 0;
+    }
+
+    /** What the player would currently see: output since the last screen clear, colors removed. */
+    public String screen() {
+        return out.substring(lastClear).replaceAll("\u001B\\[[0-9;]*[A-Za-z]", "");
+    }
+
+    /** Full log with colors removed (handy for asserting on styled text). */
+    public String plainOutput() {
+        return out.toString().replaceAll("\u001B\\[[0-9;]*[A-Za-z]", "");
+    }
+
+    public int clears() {
+        return clears;
+    }
+
+    /**
+     * What was on screen when input number {@code index} (0-based) was asked for, i.e. everything
+     * printed after the previous input. Colors removed.
+     */
+    public String screenBefore(int index) {
+        return screensBeforeInput.get(index);
     }
 
     public int remainingInput() {

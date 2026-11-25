@@ -6,6 +6,7 @@ import mappa.core.items.ItemDefinition;
 import mappa.core.items.ItemSlot;
 import mappa.core.items.Rarity;
 import mappa.core.mobs.MobDefinition;
+import mappa.core.save.SaveSettings;
 import mappa.core.stats.StatType;
 
 import java.util.ArrayDeque;
@@ -317,6 +318,11 @@ public final class ContentValidator {
             JsonElement curve = e.getValue().get("levelCurve");
             if (curve != null && !r.levelCurves.containsKey(curve.getAsString())) {
                 p.add("config '" + e.getKey() + "': unknown levelCurve '" + curve.getAsString() + "'");
+            }
+            try {
+                SaveSettings.from(e.getValue());
+            } catch (RuntimeException ex) {
+                p.add("config '" + e.getKey() + "': " + ex.getMessage());
             }
         }
     }

@@ -4,6 +4,7 @@ rem Usage:  play            normal game
 rem         play --dev      developer start (lots of gold / max level)
 rem         play --seed=42  repeatable randomness
 rem Set MAPPA_NO_COLOR=1 to turn off terminal colors.
+rem Set MAPPA_ASCII=1 to draw boxes with plain ASCII instead of line characters.
 setlocal
 
 rem Folder this script lives in (works no matter where it's started from).
@@ -30,6 +31,16 @@ if not defined JAR (
 
 set "COLOR_FLAG="
 if defined MAPPA_NO_COLOR set "COLOR_FLAG=-Dmappa.noColor=true"
+set "ASCII_FLAG="
+if defined MAPPA_ASCII set "ASCII_FLAG=-Dmappa.ascii=true"
 
-"%JAVA_EXE%" %COLOR_FLAG% -jar "%JAR%" %*
+rem Switch the terminal to UTF-8 so boxes and bars draw correctly; restore it afterwards.
+set "OLDCP="
+for /f "tokens=2 delims=:." %%c in ('chcp') do set "OLDCP=%%c"
+chcp 65001 >nul
+
+rem Saves always go in the project's saves folder, wherever this script is started from.
+"%JAVA_EXE%" -Dstdout.encoding=UTF-8 %COLOR_FLAG% %ASCII_FLAG% -jar "%JAR%" %* "--saves=%ROOT%saves"
+
+if defined OLDCP chcp %OLDCP% >nul
 endlocal

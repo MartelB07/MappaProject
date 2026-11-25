@@ -9,53 +9,88 @@ import mappa.core.io.GameIO;
 import mappa.core.io.Menu;
 import mappa.core.items.ItemInstance;
 import mappa.core.random.Rng;
+import mappa.core.save.SaveException;
+import mappa.core.save.SaveMenu;
+import mappa.core.save.SaveSettings;
+import mappa.core.save.SaveStore;
+import mappa.core.ui.Tone;
+import mappa.core.ui.Ui;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Mappa Dungeons lobby: character management and dungeon selection. */
 public class DungeonsGame {
+    /** Accent color for every Dungeons screen. */
+    public static final Ansi.Color ACCENT = Ansi.Color.PURPLE;
+
     private final ContentRegistry content;
     private final DungeonsConfig config;
     private final Rng rng;
     private final Menu menu;
+    private final Ui ui;
     private final GameIO io;
     private final boolean devMode;
+    private final SaveStore saves;
     private DungeonPlayer player;
+    private int slot;
 
+    /** A game without saving (used by tests). */
     public DungeonsGame(ContentRegistry content, Rng rng, GameIO io, boolean devMode) {
+        this(content, rng, io, devMode, null);
+    }
+
+    /** @param savesRoot folder that holds all save files, or null to play without saving */
+    public DungeonsGame(ContentRegistry content, Rng rng, GameIO io, boolean devMode, Path savesRoot) {
         this.content = content;
         this.config = DungeonsConfig.from(content);
         this.rng = rng;
         this.io = io;
-        this.menu = new Menu(io);
+        this.ui = new Ui(io, ACCENT);
+        this.menu = new Menu(ui);
         this.devMode = devMode;
+        SaveSettings settings = SaveSettings.from(content.config("dungeons"));
+        this.saves = savesRoot == null ? null
+                : new SaveStore(savesRoot, DungeonsSave.MODE, settings.slots(), DungeonsSave.FORMAT);
     }
 
     public DungeonPlayer player() {
         return player;
     }
 
+    /** The slot this game saves to (0 = not saving). */
+    public int slot() {
+        return slot;
+    }
+
     public void run() {
-        io.println();
-        io.println("Running Mappa Dungeons...");
-        io.println("*New players: open your inventory and equip a starter weapon and spell first.*");
-        player = new DungeonPlayer(menu.readName("Give your player a name: ", 20), config, content);
-        if (devMode) {
-            player.wallet().add(99_999);
-            io.println(Ansi.color("DEVELOPER MODE", Ansi.Color.RED));
+        ui.banner(Tone.MAGIC, "Mappa Dungeons", "Clear rooms, beat the boss, collect rare loot.");
+        if (!startOrLoad()) {
+            return;
         }
         DungeonInventoryScreen screens = new DungeonInventoryScreen(player, menu);
-        io.println();
-        io.println("Welcome to the Lobby " + player.name());
+        ui.banner(Tone.MAGIC, "Welcome to the Lobby " + player.name(),
+                "Get ready here, then pick a dungeon. Your health is restored every time you return.");
         while (true) {
             player.health().fill();
-            int c = menu.choose("", "exit the game", "Open Stats", "Open Inventory", "Open Attributes",
-                    "Test Damage", "Sell Items", "Start a Dungeon");
+            lobbyHud();
+            List<String> options = new ArrayList<>(List.of("Open Stats", "Open Inventory", "Open Attributes",
+                    "Test Damage", "Sell Items", "Start a Dungeon"));
+            if (saves != null) {
+                options.add("Save Game");
+            }
+            int c = menu.chooseFrom("What would you like to do?", options,
+                    saves != null ? "save and exit" : "exit the game");
             switch (c) {
                 case Menu.CANCEL -> {
+                    if (saves != null) {
+                        autosave();
+                        ui.success("Game saved to slot " + slot + ". Returning to home page...");
+                        return;
+                    }
                     if (menu.confirm("Are you sure you want to exit? Your data will be lost.")) {
-                        io.println("Returning to home page...");
+                        ui.muted("Returning to home page...");
                         return;
                     }
                 }
@@ -65,32 +100,104 @@ public class DungeonsGame {
                 case 4 -> testDamage();
                 case 5 -> sell();
                 case 6 -> startDungeon();
+                case 7 -> ui.success("Game saved to slot " + slot + ".");
                 default -> { }
+            }
+            autosave(); // lobby only: never mid-run
+        }
+    }
+
+    /** Shows the save screen (if saving) and sets up the player. Returns false if the player backed out. */
+    private boolean startOrLoad() {
+        if (saves == null) {
+            newCharacter();
+            return true;
+        }
+        while (true) {
+            SaveMenu.Choice choice = new SaveMenu(saves, menu).start("Mappa Dungeons");
+            switch (choice.kind()) {
+                case BACK -> {
+                    return false;
+                }
+                case NEW_GAME -> {
+                    slot = choice.slot();
+                    newCharacter();
+                    autosave();
+                    return true;
+                }
+                case LOAD -> {
+                    try {
+                        List<String> warnings = new ArrayList<>();
+                        player = DungeonsSave.read(saves.load(choice.slot()), content, config, warnings);
+                        slot = choice.slot();
+                        SaveMenu.showWarnings(ui, warnings);
+                        ui.banner(Tone.SUCCESS, "Welcome back " + player.name() + "!", "Loaded from slot " + slot + ".");
+                        return true;
+                    } catch (SaveException e) {
+                        ui.danger(e.getMessage());
+                    } catch (RuntimeException e) {
+                        ui.danger("Slot " + choice.slot() + " couldn't be loaded (" + e.getMessage() + ").");
+                    }
+                }
+                default -> throw new IllegalStateException();
             }
         }
     }
 
+    private void newCharacter() {
+        ui.info("New players: open your inventory and equip a starter weapon and spell first.");
+        player = new DungeonPlayer(menu.readName("Give your player a name: ", 20), config, content);
+        if (devMode) {
+            player.wallet().add(99_999);
+            ui.danger("DEVELOPER MODE");
+        }
+    }
+
+    /** Saves to the current slot (does nothing when playing without saves). */
+    void autosave() {
+        if (saves == null || slot == 0) {
+            return;
+        }
+        try {
+            saves.save(slot, DungeonsSave.summary(player, content), DungeonsSave.write(player));
+        } catch (SaveException e) {
+            ui.warn("Warning: " + e.getMessage());
+        }
+    }
+
+    private void lobbyHud() {
+        long cleared = content.dungeons().stream().filter(d -> player.hasCleared(d.id())).count();
+        String points = player.availablePoints() > 0
+                ? Ansi.bold(player.availablePoints() + " unspent point(s)", Ansi.Color.GOLD) : "no unspent points";
+        ui.header("Lobby",
+                Ansi.bold(player.name()) + "  Lv " + player.level() + "   HP "
+                        + ui.bar(player.health().current(), player.health().max(), 14),
+                "Gold " + Ansi.color(String.valueOf(player.wallet().gold()), Ansi.Color.GOLD) + "   Dungeons cleared "
+                        + cleared + "/" + content.dungeons().size() + "   " + points);
+    }
+
     private void testDamage() {
-        io.println();
-        io.println("Melee damage per hit: " + player.attackDamage()
+        List<String> lines = new ArrayList<>();
+        lines.add("Melee damage per hit: " + player.attackDamage()
                 + (player.weapon() == null ? " (no weapon equipped)" : " with " + player.weapon().name()));
         for (int s = 0; s < DungeonPlayer.SPELL_SLOTS; s++) {
             ItemInstance spell = player.spell(s);
             if (spell != null) {
                 String what = spell.healAmount() > 0 ? "heals " + spell.healAmount()
                         : "deals " + player.spellDamage(spell) + " to " + spell.effect().target().name().toLowerCase();
-                io.println("Spell " + (s + 1) + " (" + spell.name() + "): " + what
+                lines.add("Spell " + (s + 1) + " (" + spell.name() + "): " + what
                         + ", cooldown " + spell.effect().cooldown() + " turn(s)");
             }
         }
-        io.println("Defense: " + player.defense() + "   Max health: " + player.health().max());
+        lines.add("Defense: " + player.defense() + "   Max health: " + player.health().max());
+        ui.header("Damage Test", lines);
     }
 
     private void sell() {
         while (true) {
             List<ItemStack> stacks = new ArrayList<>(player.inventory().stacks());
             if (stacks.isEmpty()) {
-                io.println("No item to sell.");
+                ui.warn("No item to sell.");
                 return;
             }
             List<String> labels = new ArrayList<>();
@@ -98,8 +205,8 @@ public class DungeonsGame {
                 labels.add(DungeonInventoryScreen.describe(s.item(), s.count()) + "  -> "
                         + s.item().sellValue(config.sellPercent()) + " gold");
             }
-            io.println();
-            io.println("*Items sell for " + config.sellPercent() + "% of their value.*  Gold: " + player.wallet().gold());
+            ui.header("Sell Items", "Items sell for " + config.sellPercent() + "% of their value.   Gold: "
+                    + Ansi.color(String.valueOf(player.wallet().gold()), Ansi.Color.GOLD));
             int pick = menu.chooseFrom("Which item would you like to sell?", labels, "go back");
             if (pick == Menu.CANCEL) {
                 return;
@@ -109,7 +216,7 @@ public class DungeonsGame {
             if (menu.confirm("Sell " + item.displayName() + " for " + value + " gold?")) {
                 player.inventory().remove(item);
                 player.wallet().add(value);
-                io.println("You sold " + item.name() + " for " + value + " gold.");
+                ui.success("You sold " + item.name() + " for " + value + " gold.");
             }
         }
     }
@@ -129,7 +236,7 @@ public class DungeonsGame {
         }
         DungeonDefinition dungeon = dungeons.get(pick - 1);
         if (!isUnlocked(dungeon)) {
-            io.println("You need to clear " + content.dungeon(dungeon.unlockRequires()).name() + " first.");
+            ui.warn("You need to clear " + content.dungeon(dungeon.unlockRequires()).name() + " first.");
             return;
         }
         Difficulty difficulty = selectDifficulty(dungeon);
@@ -173,7 +280,7 @@ public class DungeonsGame {
             if (player.level() >= req) {
                 return d;
             }
-            io.println("You need to be level " + req + " to play this difficulty.");
+            ui.warn("You need to be level " + req + " to play this difficulty.");
         }
     }
 

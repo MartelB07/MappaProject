@@ -1,6 +1,6 @@
 {
   "id": "dungeon_02",
-  "name": "Dungeon 2",
+  "name": "Dungeon 2", "description": "Flooded catacombs where the mobs hit harder and the loot shines brighter.",
   "order": 2,
   "difficulties": {
     "EASY": {

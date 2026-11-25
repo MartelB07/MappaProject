@@ -22,4 +22,12 @@ public interface GameIO {
     default void println() {
         print(System.lineSeparator());
     }
+
+    /**
+     * Wipes the screen (and scroll-back) where the output supports it. Implementations
+     * call this after each input, so the player only sees what happened since their last
+     * input. The default does nothing.
+     */
+    default void clear() {
+    }
 }

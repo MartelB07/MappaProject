@@ -5,6 +5,10 @@ import mappa.testsupport.ScriptedIO;
 import mappa.testsupport.TestContent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,11 +17,43 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Timeout(10)
 class GameSmokeTest {
 
+    @TempDir
+    Path savesRoot;
+
     private ScriptedIO play(String... script) {
         ScriptedIO io = ScriptedIO.of(script);
         new GameLauncher(TestContent.real(), new SeededRng(1234), io, false).run();
         assertEquals(0, io.remainingInput(), "script not fully consumed:\n" + io.output());
         return io;
+    }
+
+    private ScriptedIO playWithSaves(String... script) {
+        ScriptedIO io = ScriptedIO.of(script);
+        new GameLauncher(TestContent.real(), new SeededRng(1234), io, false, savesRoot).run();
+        assertEquals(0, io.remainingInput(), "script not fully consumed:\n" + io.output());
+        return io;
+    }
+
+    @Test
+    void saves_eachModeStartsSavesAndContinues() {
+        playWithSaves(
+                "1", "1", "1", "Hero", "0",   // Adventure: new game in slot 1, save & exit
+                "2", "1", "3", "Tess", "0",   // Dungeons: new game in slot 3, save & exit
+                "3", "1", "2", "0",           // Explore: new game in slot 2, save & exit
+                "0");
+        ScriptedIO io = playWithSaves(
+                "1", "2", "0",                // Adventure: continue slot 1
+                "2", "2", "0",                // Dungeons: continue slot 3
+                "3", "2", "0",                // Explore: continue slot 2
+                "0");
+        assertTrue(io.outputContains("Welcome back Hero"));
+        assertTrue(io.outputContains("Continue  Slot 1: Hero - Level 0 - Home"));
+        assertTrue(io.outputContains("Welcome to the Lobby Tess"));
+        assertTrue(io.outputContains("Continue  Slot 3: Tess - Level 0 - 0/3 dungeons cleared"));
+        assertTrue(io.outputContains("Continue  Slot 2: Day 1"));
+        assertTrue(Files.isRegularFile(savesRoot.resolve("adventure/slot1.json")));
+        assertTrue(Files.isRegularFile(savesRoot.resolve("dungeons/slot3.json")));
+        assertTrue(Files.isRegularFile(savesRoot.resolve("explore/slot2.json")));
     }
 
     @Test
@@ -28,7 +64,7 @@ class GameSmokeTest {
     @Test
     void infoPage_returnsToMenu() {
         ScriptedIO io = play("4", "", "0");
-        assertTrue(io.outputContains("Mappa Dungeons:"));
+        assertTrue(io.plainOutput().contains("Mappa Dungeons"));
         assertTrue(io.outputContains("Hardcore"));
     }
 

@@ -1,6 +1,6 @@
 {
   "id": "dungeon_03",
-  "name": "Dungeon 3",
+  "name": "Dungeon 3", "description": "A fortress of black stone. Only the best-equipped survive its halls.",
   "order": 3,
   "difficulties": {
     "EASY": {

@@ -10,10 +10,27 @@ Goes with [`scalability_plan.md`](scalability_plan.md). Issue IDs refer to [`cur
 The restructure fixes these by passing in `GameIO` and `Rng`, so tests can feed scripted input and fixed random values.
 
 ## Status
-Implemented: **150 tests, all passing** (`gradlew.bat test`). A few planned files were merged into neighbors:
+Implemented: **212 tests, all passing** (`gradlew.bat test`). A few planned files were merged into neighbors:
 `AttackTelegraphTest`/`RewardRollerTest`/`DungeonsGameTest` live in `DungeonRunTest`, and the Health tests live in
 `StatsTest`. Added beyond the plan: `JsonContentLoaderTest` (broken-data error messages), `DungeonsConfigTest`,
 `SurvivalStateTest`, and an index-completeness check in `ContentValidationTest`.
+
+### Text UI tests
+- `core/ui/TextTest`: visible width ignores color codes; padding never truncates; word wrap respects the width, splits overlong words, and closes and reopens colors across lines.
+- `core/ui/UiTest`: banners resize to fit ("+40 gold" vs "+10000000 gold"), every line of a box is exactly as wide as its border (Unicode and ASCII, colored lines, long wrapped lines), ASCII mode outputs only ASCII, bar fill and color thresholds, header rules match the widest line.
+- `core/io/MenuLayoutTest`: one column for short lists, two aligned columns (filled top to bottom) for long ones, `[0]` last, padded numbers for 10+ options.
+- `core/io/ConsoleIOTest`: the screen is cleared after every input when clearing is on, and never when it's off.
+- `adventure/AdventureScreenTest`: after traveling home the screen shows only the arrival banner, the Home header and menu, not the previous menu or header; a level up shows a boxed banner.
+
+### Save system tests (phase 6)
+All of these write to a JUnit `@TempDir`, never to the real `saves/` folder.
+- `core/save/SaveStoreTest`: round trip, no leftover `.tmp` file, empty and deleted slots, damaged files, another mode's file, newer format refused, older format upgraded by a migration, slot range, `SaveSettings` defaults and limits.
+- `core/save/ItemCodecTest`: rolled loot keeps its id, rarity and multiplier; deleted items and rarities are skipped with a warning; inventories round trip; a smaller inventory reports what didn't fit; gear above your level moves to the inventory.
+- `core/save/SaveMenuTest`: New game picks a slot, Continue loads it, overwriting asks first, Delete works, unreadable saves can't be loaded but can be deleted.
+- `adventure/AdventureSaveTest`: full character round trip; a deleted or too-high region sends you to the start; scripted new game → save & exit → continue; dying keeps the last save.
+- `dungeons/DungeonsSaveTest`: points, spells, gear, loot, gold and cleared dungeons (unlocks) round trip; extra points beyond the level are dropped; deleted dungeons are reported; playing without saves writes nothing.
+- `explore/ExploreSaveTest`: clock, needs, inventory, world and position round trip; slot count comes from the config; dying deletes the save; deleted biomes are replaced.
+- `GameSmokeTest.saves_eachModeStartsSavesAndContinues`: the real launcher creates a save in every mode, then continues each one.
 
 ## Tooling
 | Piece | Choice |

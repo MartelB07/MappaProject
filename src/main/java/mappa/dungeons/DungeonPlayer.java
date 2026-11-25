@@ -40,7 +40,12 @@ public class DungeonPlayer {
     private final Set<String> clearedDungeons = new HashSet<>();
     private int availablePoints;
 
+    /** A new character with the configured starting items. */
     public DungeonPlayer(String name, DungeonsConfig config, ContentRegistry content) {
+        this(name, config, content, true);
+    }
+
+    private DungeonPlayer(String name, DungeonsConfig config, ContentRegistry content, boolean starterKit) {
         this.name = name;
         this.config = config;
         stats.setBase(StatType.MAX_HEALTH, config.startingHealth());
@@ -48,13 +53,52 @@ public class DungeonPlayer {
         this.progression = new Progression(content.levelCurve(config.levelCurve()));
         this.equipment = new Equipment(stats, health);
         this.inventory = new Inventory(config.inventorySize());
-        this.wallet = new Wallet(config.startingGold());
+        this.wallet = new Wallet(starterKit ? config.startingGold() : 0);
         for (Attribute a : Attribute.values()) {
             points.put(a, 0);
         }
-        for (String id : config.startingItems()) {
-            inventory.add(ItemInstance.of(content.item(id)));
+        if (starterKit) {
+            for (String id : config.startingItems()) {
+                inventory.add(ItemInstance.of(content.item(id)));
+            }
         }
+    }
+
+    /** An empty character (no items, no gold) for loading a save into. */
+    static DungeonPlayer blank(String name, DungeonsConfig config, ContentRegistry content) {
+        return new DungeonPlayer(name, config, content, false);
+    }
+
+    /** Restores level and EXP from a save. */
+    void restoreProgress(int level, int exp) {
+        progression.restore(level, exp);
+    }
+
+    /**
+     * Restores attribute points from a save. If the save claims more points than this level
+     * can have earned (e.g. the level curve changed), the extra points are dropped.
+     */
+    void restorePoints(Map<Attribute, Integer> spent, int available) {
+        int earned = level() * config.pointsPerLevel();
+        int total = 0;
+        for (Attribute a : Attribute.values()) {
+            int v = Math.max(0, spent.getOrDefault(a, 0));
+            v = Math.min(v, earned - total);
+            points.put(a, v);
+            total += v;
+        }
+        availablePoints = Math.max(0, Math.min(available, earned - total));
+        applyAttributes();
+        health.fill();
+    }
+
+    /** Puts a spell straight into a slot when loading (it doesn't come from the inventory). */
+    boolean restoreSpell(int slot, ItemInstance spell) {
+        if (slot < 0 || slot >= SPELL_SLOTS || spell.slot() != ItemSlot.SPELL || spell.levelReq() > level()) {
+            return false;
+        }
+        spells[slot] = spell;
+        return true;
     }
 
     // ------------------------------------------------------------------ basics

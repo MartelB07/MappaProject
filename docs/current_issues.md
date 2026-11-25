@@ -24,7 +24,7 @@ the **old** files, which no longer exist.
 | A-01 … A-13 | ✅ Fixed in the Adventure rewrite | `AdventureCombatTest`, `ChestServiceTest`, `RegionGraphTest`, `EquipmentTest` |
 | G-01, S-01 | ✅ Fixed (`Wallet`; `--dev` launch flag) | `WalletTest`, `AdventurePlayerTest` |
 | ST-01 … ST-13 | ✅ Fixed (core package, JSON content, injected IO/RNG) | whole suite |
-| ST-14 | ☐ Open — save/load is roadmap phase 6 | — |
+| ST-14 | ✅ Fixed: per-mode save slots (phase 6) | `SaveStoreTest`, `ItemCodecTest`, `SaveMenuTest`, `*SaveTest` |
 | T-01 | ◐ `git init` done; nothing committed yet | — |
 | T-02 … T-04 | ✅ Gradle wrapper, README, lowercase packages | — |
 

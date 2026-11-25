@@ -22,7 +22,9 @@ Quickest way to play (builds whatever changed, then starts the game):
 ```powershell
 .\play                # or: .\play --dev   /   .\play --seed=42
 ```
-Set `MAPPA_NO_COLOR=1` first if your terminal shows codes like `[32m` instead of colors.
+The screen clears after every input, so you only see what just happened and your current options.
+Set `MAPPA_NO_COLOR=1` first if your terminal shows codes like `[32m` instead of colors, or `MAPPA_ASCII=1`
+if boxes and bars look garbled.
 
 Or step by step:
 ```powershell
@@ -30,8 +32,10 @@ Or step by step:
 .\gradlew.bat jar                  # build\libs\MappaProject-0.2.0.jar (includes Gson)
 & "$env:JAVA_HOME\bin\java" -jar build\libs\MappaProject-0.2.0.jar
 ```
-Launch flags: `--dev` (developer start: lots of gold / max level), `--seed=N` (repeatable randomness).
-Add `-Dmappa.noColor=true` before `-jar` to turn off terminal colors.
+Launch flags: `--dev` (developer start: lots of gold / max level), `--seed=N` (repeatable randomness),
+`--saves=DIR` (where saves go; default `saves` in the current folder), `--no-saves` (play without saving).
+Display options go before `-jar`: `-Dmappa.noColor=true` (no colors), `-Dmappa.ascii=true` (plain ASCII boxes),
+`-Dmappa.clear=false` (don't clear the screen after each input; it's already off automatically in IntelliJ's Run window).
 
 In IntelliJ: **File → Open → build.gradle → Open as Project**, then run `mappa.GameLauncher`.
 IntelliJ shows the project as **MappaProject** and creates its own project files from `build.gradle`

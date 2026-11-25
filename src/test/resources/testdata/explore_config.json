@@ -1,5 +1,6 @@
 {
   "id": "explore",
+  "saves": { "slots": 2, "deleteOnDeath": true },
   "levelCurve": "short",
   "startingHealth": 20,
   "maxHunger": 100,

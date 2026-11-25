@@ -45,6 +45,15 @@ public class SurvivalState {
         }
     }
 
+    /** Restores clock and needs from a save (values are clamped to valid ranges). */
+    void restore(int day, int hour, int health, int hunger, int thirst) {
+        this.day = Math.max(1, day);
+        this.hour = Math.floorMod(hour, config.hoursPerDay());
+        this.hunger = Math.max(0, Math.min(config.maxHunger(), hunger));
+        this.thirst = Math.max(0, Math.min(config.maxThirst(), thirst));
+        this.health.set(health <= 0 ? this.health.max() : health);
+    }
+
     public boolean isNight() {
         return hour >= config.nightStartsAt() || hour < config.nightEndsAt();
     }

@@ -17,7 +17,7 @@ import java.util.Set;
 public record DungeonDefinition(String id, String name, int order, String unlockRequires,
                                 Map<String, Settings> difficulties, int turnLimit,
                                 List<List<String>> waves, String boss,
-                                Set<String> rewardTags, Set<String> rewardItems) {
+                                Set<String> rewardTags, Set<String> rewardItems, String description) {
 
     /**
      * @param levelReq       player level needed to enter
@@ -32,5 +32,6 @@ public record DungeonDefinition(String id, String name, int order, String unlock
         waves = waves.stream().map(List::copyOf).toList();
         rewardTags = Set.copyOf(rewardTags);
         rewardItems = Set.copyOf(rewardItems);
+        description = description == null ? "" : description;
     }
 }

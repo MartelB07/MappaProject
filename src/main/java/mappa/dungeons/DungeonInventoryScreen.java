@@ -1,11 +1,12 @@
 package mappa.dungeons;
 
 import mappa.core.inventory.ItemStack;
-import mappa.core.io.GameIO;
+import mappa.core.io.Ansi;
 import mappa.core.io.Menu;
 import mappa.core.items.ClassTag;
 import mappa.core.items.ItemInstance;
 import mappa.core.items.ItemSlot;
+import mappa.core.ui.Ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,48 +16,49 @@ import java.util.Map;
 final class DungeonInventoryScreen {
     private final DungeonPlayer player;
     private final Menu menu;
-    private final GameIO io;
+    private final Ui ui;
 
     DungeonInventoryScreen(DungeonPlayer player, Menu menu) {
         this.player = player;
         this.menu = menu;
-        this.io = menu.io();
+        this.ui = menu.ui();
     }
 
     static String describe(ItemInstance i, int count) {
         String stats = i.statSummary();
-        return i.displayName() + (count > 1 ? " x" + count : "") + (stats.isEmpty() ? "" : "  (" + stats + ")")
-                + (i.classTag() != ClassTag.ANY ? "  [" + i.classTag() + "]" : "");
+        return i.displayName() + (count > 1 ? " x" + count : "")
+                + (stats.isEmpty() ? "" : Ansi.color("  (" + stats + ")", Ansi.Color.GRAY))
+                + (i.classTag() != ClassTag.ANY ? Ansi.color("  [" + i.classTag() + "]", Ansi.Color.GRAY) : "");
     }
 
     void showInventory() {
-        io.println();
-        io.println("Inventory (" + player.inventory().usedSlots() + "/" + player.inventory().capacity() + " slots):");
-        if (player.inventory().isEmpty()) {
-            io.println("  (empty)");
-        }
+        List<String> lines = new ArrayList<>();
         for (ItemStack s : player.inventory().stacks()) {
-            io.println("  " + describe(s.item(), s.count()));
+            lines.add(describe(s.item(), s.count()));
         }
+        if (lines.isEmpty()) {
+            lines.add("(empty)");
+        }
+        ui.header("Inventory  " + player.inventory().usedSlots() + "/" + player.inventory().capacity() + " slots",
+                lines);
     }
 
     void showStats() {
-        io.println();
-        io.println("Name: " + player.name());
-        io.println("Health: " + player.health().current() + "/" + player.health().max());
-        io.println("Level: " + player.level());
-        io.println("Exp: " + (player.progression().isMaxLevel() ? "MAX"
+        List<String> lines = new ArrayList<>();
+        lines.add("Health: " + ui.bar(player.health().current(), player.health().max(), 14));
+        lines.add("Level:  " + player.level() + "   Exp: " + (player.progression().isMaxLevel() ? "MAX"
                 : player.progression().exp() + "/" + player.progression().expForNext()));
         for (ItemSlot slot : List.of(ItemSlot.WEAPON, ItemSlot.HELMET, ItemSlot.CHEST)) {
             ItemInstance i = player.equipment().get(slot);
-            io.println(label(slot) + ": " + (i == null ? "-" : describe(i, 1)));
+            lines.add(label(slot) + ": " + (i == null ? "-" : describe(i, 1)));
         }
         for (int s = 0; s < DungeonPlayer.SPELL_SLOTS; s++) {
             ItemInstance i = player.spell(s);
-            io.println("Spell " + (s + 1) + ": " + (i == null ? "-" : describe(i, 1)));
+            lines.add("Spell " + (s + 1) + ": " + (i == null ? "-" : describe(i, 1)));
         }
-        io.println("Attack damage: " + player.attackDamage() + "   Defense: " + player.defense());
-        io.println("Gold: " + player.wallet().gold());
+        lines.add("Attack damage: " + player.attackDamage() + "   Defense: " + player.defense());
+        lines.add("Gold: " + Ansi.color(String.valueOf(player.wallet().gold()), Ansi.Color.GOLD));
+        ui.header(player.name() + "'s Stats", lines);
     }
 
     static String label(ItemSlot slot) {
@@ -84,7 +86,7 @@ final class DungeonInventoryScreen {
     private boolean equip() {
         List<ItemStack> options = player.inventory().find(i -> i.slot().isGear() || i.slot() == ItemSlot.SPELL);
         if (options.isEmpty()) {
-            io.println("No item to equip.");
+            ui.warn("No item to equip.");
             return false;
         }
         List<String> labels = new ArrayList<>();
@@ -130,7 +132,7 @@ final class DungeonInventoryScreen {
             }
         }
         if (labels.isEmpty()) {
-            io.println("No item to unequip.");
+            ui.warn("No item to unequip.");
             return false;
         }
         int pick = menu.chooseFrom("Which item would you like to unequip?", labels, "cancel");
@@ -143,21 +145,22 @@ final class DungeonInventoryScreen {
 
     private boolean report(DungeonPlayer.EquipOutcome outcome, ItemInstance item) {
         switch (outcome) {
-            case OK -> io.println("Done.");
-            case LEVEL_TOO_LOW -> io.println("You need to be level " + item.levelReq() + " to equip that.");
-            case INVENTORY_FULL -> io.println("Your inventory is full.");
-            default -> io.println("You can't equip that.");
+            case OK -> ui.success(item == null ? "Unequipped." : "Equipped " + item.name() + ".");
+            case LEVEL_TOO_LOW -> ui.warn("You need to be level " + item.levelReq() + " to equip that.");
+            case INVENTORY_FULL -> ui.warn("Your inventory is full.");
+            default -> ui.warn("You can't equip that.");
         }
         return outcome == DungeonPlayer.EquipOutcome.OK;
     }
 
     void attributes() {
         while (true) {
-            io.println();
-            io.println("War points: " + player.points(DungeonPlayer.Attribute.WAR)
-                    + "   Mage points: " + player.points(DungeonPlayer.Attribute.MAGE)
-                    + "   Health points: " + player.points(DungeonPlayer.Attribute.HEALTH));
-            io.println("Available points: " + player.availablePoints());
+            ui.header("Attributes",
+                "War " + player.points(DungeonPlayer.Attribute.WAR)
+                        + "   Mage " + player.points(DungeonPlayer.Attribute.MAGE)
+                        + "   Health " + player.points(DungeonPlayer.Attribute.HEALTH),
+                "Available points: " + Ansi.bold(String.valueOf(player.availablePoints()),
+                        player.availablePoints() > 0 ? Ansi.Color.GOLD : Ansi.Color.DEFAULT));
             int c = menu.choose("Which attribute would you like to update?", "go back",
                     "War Points (+" + player.config().damagePerPoint() + " war damage each)",
                     "Mage Points (+" + player.config().damagePerPoint() + " mage damage each)",
@@ -168,17 +171,17 @@ final class DungeonInventoryScreen {
             }
             if (c == 4) {
                 if (player.spentPoints() == 0) {
-                    io.println("You have no points to reset.");
+                    ui.warn("You have no points to reset.");
                 } else if (!player.wallet().canAfford(player.resetCost())) {
-                    io.println("You don't have enough gold to reset points.");
+                    ui.warn("You don't have enough gold to reset points.");
                 } else if (menu.confirm("Reset " + player.spentPoints() + " points for " + player.resetCost() + " gold?")) {
                     player.resetPoints();
-                    io.println("Points have been reset.");
+                    ui.success("Points have been reset.");
                 }
                 continue;
             }
             if (player.availablePoints() == 0) {
-                io.println("You have no points to spend. Level up to earn more.");
+                ui.warn("You have no points to spend. Level up to earn more.");
                 continue;
             }
             int amount = menu.readInt("How many points? (1-" + player.availablePoints() + ", 0 to cancel): ",

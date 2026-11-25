@@ -12,6 +12,8 @@ import mappa.core.mobs.MobDefinition;
 import mappa.core.mobs.MobFactory;
 import mappa.core.progression.LevelUpResult;
 import mappa.core.random.Rng;
+import mappa.core.ui.Tone;
+import mappa.core.ui.Ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,15 +56,21 @@ public class DungeonRun {
 
         /** Colored bar such as "--" that fills up until the mob attacks. */
         public String telegraph() {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < charge; i++) {
-                Ansi.Color c = i == attackEvery() - 2 ? Ansi.Color.RED : (i == 0 ? Ansi.Color.GREEN : Ansi.Color.YELLOW);
-                sb.append(Ansi.color("-", c));
-            }
-            if (attacksNextTurn()) {
-                sb.append(Ansi.color(" ! attacking next turn", Ansi.Color.RED));
-            }
-            return sb.toString();
+            return telegraph(mappa.core.ui.Glyphs.current());
+        }
+
+        /**
+         * Attack gauge, e.g. "attack [##.]": one cell per turn until the mob strikes.
+         * Turns yellow as it fills and red (with a warning) the turn before it attacks.
+         */
+        public String telegraph(mappa.core.ui.Glyphs glyphs) {
+            int cells = Math.max(1, attackEvery() - 1);
+            int filled = Math.min(charge, cells);
+            Ansi.Color c = attacksNextTurn() ? Ansi.Color.RED : filled > 0 ? Ansi.Color.YELLOW : Ansi.Color.GRAY;
+            String gauge = Ansi.color("attack ", Ansi.Color.GRAY) + "["
+                    + Ansi.color(glyphs.barFull().repeat(filled), c)
+                    + Ansi.color(glyphs.barEmpty().repeat(cells - filled), Ansi.Color.GRAY) + "]";
+            return attacksNextTurn() ? gauge + Ansi.bold(" ATTACKING NEXT TURN", Ansi.Color.RED) : gauge;
         }
     }
 
@@ -73,7 +81,7 @@ public class DungeonRun {
     private final RunMode mode;
     private final DungeonPlayer player;
     private final Rng rng;
-    private final GameIO io;
+    private final Ui ui;
 
     private final List<RoomMob> mobs = new ArrayList<>();
     private final Map<String, Integer> lastCast = new HashMap<>();
@@ -99,7 +107,7 @@ public class DungeonRun {
         this.mode = mode;
         this.player = player;
         this.rng = rng;
-        this.io = io;
+        this.ui = new Ui(io, DungeonsGame.ACCENT);
         this.turnsLeft = dungeon.turnLimit();
         player.health().fill();
         spawnRoom();
@@ -199,7 +207,7 @@ public class DungeonRun {
         }
         int damage = player.attackDamage();
         if (damage <= 0) {
-            io.println("You have no weapon equipped.");
+            ui.warn("You have no weapon equipped.");
             return false;
         }
         List<RoomMob> alive = aliveMobs();
@@ -211,7 +219,7 @@ public class DungeonRun {
         if (!target.mob.isBoss()) {
             target.charge = 0; // hitting a normal mob staggers it
         }
-        io.println(target.mob.name() + " took " + dealt + " damage.");
+        ui.success(target.mob.name() + " took " + dealt + " damage.");
         if (!target.mob.isAlive()) {
             onKill(target.mob);
         }
@@ -226,32 +234,32 @@ public class DungeonRun {
         }
         ItemInstance spell = player.spell(slot);
         if (spell == null) {
-            io.println("No spell in that slot.");
+            ui.warn("No spell in that slot.");
             return false;
         }
         int wait = cooldownRemaining(spell);
         if (wait > 0) {
-            io.println("You have to wait " + wait + " turn(s) to use " + spell.name() + " again.");
+            ui.warn("You have to wait " + wait + " turn(s) to use " + spell.name() + " again.");
             return false;
         }
         if (spell.healAmount() > 0) {
             int healed = player.health().heal(spell.healAmount());
-            io.println("You cast " + spell.name() + " and healed " + healed + " health.");
+            ui.event(Tone.MAGIC, "You cast " + spell.name() + " and healed " + healed + " health.");
         }
         int damage = player.spellDamage(spell);
         if (damage > 0) {
             List<RoomMob> targets = aliveMobs();
             if (targets.isEmpty()) {
-                io.println("There are no mobs to hit.");
+                ui.warn("There are no mobs to hit.");
                 return false;
             }
             if (spell.effect().target() != ItemEffect.Target.ALL) {
                 targets = targets.subList(0, 1);
             }
-            io.println("You cast " + spell.name() + ".");
+            ui.event(Tone.MAGIC, "You cast " + spell.name() + "!");
             for (RoomMob t : targets) {
                 int dealt = t.mob.takeDamage(damage);
-                io.println("  " + t.mob.name() + " took " + dealt + " damage.");
+                ui.success("  " + t.mob.name() + " took " + dealt + " damage.");
                 if (!t.mob.isAlive()) {
                     onKill(t.mob);
                 }
@@ -268,7 +276,7 @@ public class DungeonRun {
             return false;
         }
         dodging = true;
-        io.println("You get ready to dodge.");
+        ui.info("You get ready to dodge.");
         endTurn();
         return true;
     }
@@ -286,7 +294,12 @@ public class DungeonRun {
         }
         room++;
         spawnRoom();
-        io.println("Walking... " + (isBossRoom() ? "You've reached the boss!" : "Group of enemies found."));
+        if (isBossRoom()) {
+            ui.banner(Tone.DANGER, "You've reached the boss!", "Room " + (room + 1) + " of " + roomCount()
+                    + ". Watch its attack bar and dodge when it says it is attacking next turn.");
+        } else {
+            ui.info("Walking... Group of enemies found in room " + (room + 1) + " of " + roomCount() + ".");
+        }
         return true;
     }
 
@@ -308,19 +321,20 @@ public class DungeonRun {
     }
 
     private void onKill(Mob mob) {
-        io.println(Ansi.color(mob.name() + " was defeated!", Ansi.Color.GREEN) + " +" + mob.exp() + " EXP"
-                + (mob.gold() > 0 ? ", +" + mob.gold() + " gold" : ""));
+        ui.success(mob.name() + " was defeated!  +" + mob.exp() + " EXP" + (mob.gold() > 0 ? "  +" + mob.gold() + " gold" : ""));
         player.wallet().add(mob.gold());
         LevelUpResult lu = player.addExp(mob.exp());
         if (lu.leveledUp()) {
-            io.println(Ansi.color("You leveled up! You are now level " + lu.toLevel() + ".", Ansi.Color.YELLOW)
-                    + " +" + lu.levelsGained() * player.config().pointsPerLevel() + " attribute point(s).");
+            ui.banner(Tone.REWARD, "LEVEL UP!  You are now level " + lu.toLevel(),
+                    "+" + lu.levelsGained() * player.config().pointsPerLevel() + " attribute point(s). Health restored.");
         }
         if (lu.reachedMax()) {
-            io.println("You've reached the max level.");
+            ui.reward("You've reached the max level.");
         }
         if (isBossRoom() && roomCleared()) {
             complete();
+        } else if (roomCleared()) {
+            ui.success("Room cleared! Move on when you're ready.");
         }
     }
 
@@ -348,12 +362,12 @@ public class DungeonRun {
             if (m.charge >= m.attackEvery()) {
                 m.charge = 0;
                 if (dodging && m.mob.isBoss()) {
-                    io.println(Ansi.color("You dodged " + m.mob.name() + "'s attack.", Ansi.Color.GREEN));
+                    ui.success("You dodged " + m.mob.name() + "'s attack.");
                     continue;
                 }
                 int dmg = Math.max(1, m.mob.damage() - player.defense());
                 int taken = player.health().damage(dmg);
-                io.println(Ansi.color("You took " + taken + " damage from " + m.mob.label() + ".", Ansi.Color.RED));
+                ui.danger("You took " + taken + " damage from " + m.mob.label() + ".");
                 if (!player.health().isAlive()) {
                     break;
                 }
@@ -366,7 +380,7 @@ public class DungeonRun {
         if (inProgress() && turnsLeft <= 0) {
             turnsLeft = 0;
             status = Status.OUT_OF_TURNS;
-            io.println("You ran out of turns.");
+            ui.danger("You ran out of turns.");
         }
     }
 
@@ -374,15 +388,14 @@ public class DungeonRun {
         deaths++;
         if (mode.isOutOfLives(deaths)) {
             status = Status.DIED;
-            io.println(Ansi.color("You died.", Ansi.Color.RED)
-                    + (mode.lives() == 1 ? " " + mode.name() + " runs only give you one life." : ""));
+            ui.danger("You died." + (mode.lives() == 1 ? " " + mode.name() + " runs only give you one life." : ""));
             return;
         }
         turnsLeft -= mode.deathTurnPenalty();
         if (turnsLeft <= 0) {
             turnsLeft = 0;
             status = Status.OUT_OF_TURNS;
-            io.println(Ansi.color("You died", Ansi.Color.RED) + " and the " + mode.deathTurnPenalty()
+            ui.danger("You died and the " + mode.deathTurnPenalty()
                     + "-turn respawn penalty used up your remaining turns.");
             return;
         }
@@ -390,7 +403,7 @@ public class DungeonRun {
         player.health().set(hp);
         dodging = false;
         spawnRoom(); // the room starts over
-        io.println(Ansi.color("You died", Ansi.Color.RED) + " and respawned at the start of room " + (room + 1)
-                + " with " + hp + " health. -" + mode.deathTurnPenalty() + " turns.");
+        ui.banner(Tone.DANGER, "You died!", "You respawned at the start of room " + (room + 1) + " with " + hp
+                + " health.", Ansi.color("-" + mode.deathTurnPenalty() + " turns  (" + turnsLeft + " left)", Ansi.Color.YELLOW));
     }
 }

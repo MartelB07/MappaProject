@@ -317,7 +317,7 @@ public final class JsonContentLoader {
         JsonObject pool = o.has("rewardPool") ? o.getAsJsonObject("rewardPool") : new JsonObject();
         put(c, registry.dungeons, "dungeon", id, new DungeonDefinition(id, c.str(o, "name"), c.optInt(o, "order", 0),
                 c.optStr(o, "unlockRequires", null), diffs, c.optInt(o, "turnLimit", 75), waves, c.str(o, "boss"),
-                c.optStrSet(pool, "tags"), c.optStrSet(pool, "items")));
+                c.optStrSet(pool, "tags"), c.optStrSet(pool, "items"), c.optStr(o, "description", "")));
     }
 
     private void region(Ctx c, JsonObject o) {
@@ -325,7 +325,7 @@ public final class JsonContentLoader {
         int[] chestLevel = o.has("chestLevel") ? c.intPair(o, "chestLevel") : new int[]{1, 1};
         put(c, registry.regions, "region", id, new RegionDefinition(id, c.str(o, "name"), c.optInt(o, "levelReq", 0),
                 c.optBool(o, "hasChests", false), chestLevel[0], chestLevel[1], spawns(c, o),
-                c.optStrSet(o, "neighbors"), c.optBool(o, "isFinal", false)));
+                c.optStrSet(o, "neighbors"), c.optBool(o, "isFinal", false), c.optStr(o, "description", "")));
     }
 
     private List<SpawnEntry> spawns(Ctx c, JsonObject o) {
@@ -372,7 +372,7 @@ public final class JsonContentLoader {
         put(c, registry.biomes, "biome", id, new BiomeDefinition(id, c.str(o, "name"), danger[0], danger[1],
                 c.optInt(o, "weight", 1), resources, spawns(c, o), hazards,
                 c.optInt(survival, "hungerDrainPerHour", 0), c.optInt(survival, "thirstDrainPerHour", 0),
-                c.optStrSet(o, "traits")));
+                c.optStrSet(o, "traits"), c.optStr(o, "description", "")));
     }
 
     private void config(Ctx c, JsonObject o) {

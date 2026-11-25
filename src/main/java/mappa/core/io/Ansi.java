@@ -43,6 +43,19 @@ public final class Ansi {
         return "\u001B[" + color.code + "m" + text + RESET;
     }
 
+    /** Bold text, optionally colored. */
+    public static String bold(String text, Color color) {
+        if (!ENABLED) {
+            return text;
+        }
+        String code = color == null || color == Color.DEFAULT ? "1" : "1;" + color.code;
+        return "\u001B[" + code + "m" + text + RESET;
+    }
+
+    public static String bold(String text) {
+        return bold(text, null);
+    }
+
     /** Green above 50%, yellow above 25%, red otherwise. */
     public static String health(int current, int max) {
         Color c;

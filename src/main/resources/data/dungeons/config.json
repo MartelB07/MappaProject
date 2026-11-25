@@ -1,5 +1,6 @@
 {
   "id": "dungeons",
+  "saves": { "slots": 3, "deleteOnDeath": false },
   "levelCurve": "dungeons",
   "startingHealth": 10,
   "healthPerPoint": 2,

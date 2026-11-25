@@ -9,7 +9,8 @@ import java.util.Set;
  */
 public record BiomeDefinition(String id, String name, int dangerMin, int dangerMax, int weight,
                               List<ResourceYield> resources, List<SpawnEntry> mobs, List<Hazard> hazards,
-                              int hungerDrainPerHour, int thirstDrainPerHour, Set<String> traits) {
+                              int hungerDrainPerHour, int thirstDrainPerHour, Set<String> traits,
+                              String description) {
 
     /** A gatherable resource: item id, relative weight, and yield range per gather. */
     public record ResourceYield(String itemId, int weight, int min, int max) {
@@ -24,5 +25,6 @@ public record BiomeDefinition(String id, String name, int dangerMin, int dangerM
         mobs = List.copyOf(mobs);
         hazards = List.copyOf(hazards);
         traits = Set.copyOf(traits);
+        description = description == null ? "" : description;
     }
 }

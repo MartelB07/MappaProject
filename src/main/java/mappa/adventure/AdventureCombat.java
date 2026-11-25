@@ -8,6 +8,8 @@ import mappa.core.items.ItemDefinition;
 import mappa.core.items.ItemSlot;
 import mappa.core.mobs.Mob;
 import mappa.core.random.Rng;
+import mappa.core.ui.Tone;
+import mappa.core.ui.Ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class AdventureCombat {
     private final AdventureConfig config;
     private final ContentRegistry content;
     private final Rng rng;
-    private final GameIO io;
+    private final Ui ui;
 
     public AdventureCombat(AdventurePlayer player, Mob mob, AdventureConfig config, ContentRegistry content,
                            Rng rng, GameIO io) {
@@ -33,7 +35,7 @@ public class AdventureCombat {
         this.config = config;
         this.content = content;
         this.rng = rng;
-        this.io = io;
+        this.ui = new Ui(io, AdventureGame.ACCENT);
     }
 
     public Mob mob() {
@@ -42,14 +44,15 @@ public class AdventureCombat {
 
     /** Interactive loop. */
     public Outcome fight(Menu menu) {
-        io.println();
-        io.println("You've encountered a " + mob.label() + (mob.isBoss() ? Ansi.color(" (BOSS)", Ansi.Color.RED) : ""));
+        ui.banner(mob.isBoss() ? Tone.DANGER : Tone.WARNING,
+                (mob.isBoss() ? "BOSS FIGHT!  " : "") + "A wild " + mob.name() + " appears!",
+                "Level " + mob.level() + "   Health " + mob.maxHealth() + "   Damage ~" + mob.damage());
         while (true) {
-            io.println();
-            io.println(" " + mob.label() + "  Health: " + Ansi.health(mob.health(), mob.maxHealth()));
-            io.println(" [Level " + player.level() + "] " + player.name() + "  Health: "
-                    + Ansi.health(player.health().current(), player.health().max()));
-            int c = menu.choose("", null, "Attack", "Heal", "Escape");
+            ui.header(ui.glyphs().swords() + " Battle",
+                    padName(mob.label()) + "  " + ui.bar(mob.health(), mob.maxHealth(), 14),
+                    padName("[Level " + player.level() + "] " + player.name()) + "  "
+                            + ui.bar(player.health().current(), player.health().max(), 14));
+            int c = menu.choose("Your move:", null, "Attack", "Heal", "Escape");
             Outcome o = switch (c) {
                 case 1 -> attackTurn();
                 case 2 -> healMenu(menu);
@@ -62,6 +65,12 @@ public class AdventureCombat {
         }
     }
 
+    /** Pads both fighters' names to the same width so their health bars line up. */
+    private String padName(String s) {
+        int width = Math.max(mob.label().length(), ("[Level " + player.level() + "] " + player.name()).length());
+        return s + " ".repeat(Math.max(0, width - s.length()));
+    }
+
     // ---- turn actions (public for tests) ----
 
     /** Player attacks, then the monster answers if it survived. Null = fight continues. */
@@ -72,10 +81,14 @@ public class AdventureCombat {
             dmg *= config.critMultiplier();
         }
         if (rng.chance(mob.dodgeChance() / 100.0)) {
-            io.println(mob.name() + " dodged the attack.");
+            ui.muted(mob.name() + " dodged the attack.");
         } else {
             int dealt = mob.takeDamage(dmg);
-            io.println((crit ? "CRITICAL: " : "") + mob.name() + " took " + dealt + " damage.");
+            if (crit) {
+                ui.reward("CRITICAL HIT! " + mob.name() + " took " + dealt + " damage.");
+            } else {
+                ui.success(mob.name() + " took " + dealt + " damage.");
+            }
         }
         if (!mob.isAlive()) {
             return Outcome.WON;
@@ -88,7 +101,7 @@ public class AdventureCombat {
      * full health. Uses a turn (the monster answers) only if a potion was drunk.
      */
     public Outcome healTurn(ItemDefinition potion, int requested) {
-        int used = drinkPotions(player, potion, requested, io);
+        int used = drinkPotions(player, potion, requested, ui.io());
         if (used == 0) {
             return null;
         }
@@ -97,34 +110,40 @@ public class AdventureCombat {
 
     /** Shared potion logic. Returns how many potions were used. */
     public static int drinkPotions(AdventurePlayer player, ItemDefinition potion, int requested, GameIO io) {
+        Ui ui = new Ui(io, AdventureGame.ACCENT);
         int per = potion.effect().heal();
         int missing = player.health().max() - player.health().current();
         int owned = player.inventory().count(potion.id());
         if (owned == 0) {
-            io.println("You don't have any " + potion.name() + ".");
+            ui.warn("You don't have any " + potion.name() + ".");
             return 0;
         }
         if (missing <= 0) {
-            io.println("You're already at full health.");
+            ui.warn("You're already at full health.");
             return 0;
         }
         int needed = (missing + per - 1) / per;
         int use = Math.min(Math.min(requested, needed), owned);
         if (use < requested) {
-            io.println("Only using " + use + " (that's all you " + (use == owned ? "have" : "need") + ").");
+            ui.muted("Only using " + use + " (that's all you " + (use == owned ? "have" : "need") + ").");
         }
         player.inventory().removeByDefinition(potion.id(), use);
         int healed = player.health().heal(use * per);
-        io.println("You used " + potion.name() + " x" + use + " and received +" + healed + " health.");
+        ui.success("You used " + potion.name() + " x" + use + " and received +" + healed + " health.");
+        int left = player.inventory().count(potion.id());
+        if (left <= 3) {
+            ui.warn(left == 0 ? "That was your last " + potion.name() + "." : "Only " + left + " " + potion.name()
+                    + " left.");
+        }
         return use;
     }
 
     public Outcome escapeTurn() {
         if (rng.chance(config.escapeChancePercent() / 100.0)) {
-            io.println("You escaped!");
+            ui.success("You escaped!");
             return Outcome.FLED;
         }
-        io.println("You failed to escape.");
+        ui.warn("You failed to escape.");
         return monsterTurn();
     }
 
@@ -136,7 +155,11 @@ public class AdventureCombat {
         }
         dmg = Math.max(1, dmg - player.defense());
         int taken = player.health().damage(dmg);
-        io.println((crit ? "CRITICAL: " : "") + player.name() + " took " + taken + " damage.");
+        ui.danger((crit ? "CRITICAL! " : "") + mob.name() + " hits you: " + player.name() + " took " + taken
+                + " damage.");
+        if (player.health().isAlive() && player.health().current() <= player.health().max() * 0.25) {
+            ui.warn("Your health is low! Consider healing or escaping.");
+        }
         return player.health().isAlive() ? null : Outcome.DIED;
     }
 
@@ -149,8 +172,9 @@ public class AdventureCombat {
         }
         List<String> labels = new ArrayList<>();
         for (ItemDefinition d : potions) {
-            labels.add("[Level " + d.levelReq() + "] " + d.name() + " (+" + d.effect().heal() + " health)  You have: "
-                    + player.inventory().count(d.id()));
+            int have = player.inventory().count(d.id());
+            labels.add("[Level " + d.levelReq() + "] " + d.name() + " (+" + d.effect().heal() + " health)  "
+                    + Ansi.color("You have: " + have, have == 0 ? Ansi.Color.GRAY : Ansi.Color.GREEN));
         }
         int pick = menu.chooseFrom("Which potion do you want to use?", labels, "cancel");
         if (pick == Menu.CANCEL) {
@@ -158,10 +182,10 @@ public class AdventureCombat {
         }
         ItemDefinition potion = potions.get(pick - 1);
         if (player.level() < potion.levelReq()) {
-            io.println("You need to be level " + potion.levelReq() + " to use this potion.");
+            ui.warn("You need to be level " + potion.levelReq() + " to use this potion.");
             return null;
         }
-        int amount = menu.readInt("How many do you want to use? (0 to cancel): ", 1, 99, true);
+        int amount = menu.readInt("How many do you want to use? (0 to cancel)", 1, 99, true);
         return amount == Menu.CANCEL ? null : healTurn(potion, amount);
     }
 

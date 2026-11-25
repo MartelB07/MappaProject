@@ -10,17 +10,19 @@ import java.util.Set;
  * @param chestLevelMin lowest chest level found here
  * @param chestLevelMax highest chest level found here
  * @param isFinal       defeating a boss here wins the game
+ * @param description   optional flavor text shown when arriving ("" if none)
  */
 public record RegionDefinition(String id, String name, int levelReq, boolean hasChests, int chestLevelMin,
                                int chestLevelMax, List<SpawnEntry> mobs, Set<String> neighbors,
-                               boolean isFinal) {
+                               boolean isFinal, String description) {
     public RegionDefinition {
         mobs = List.copyOf(mobs);
         neighbors = Set.copyOf(neighbors);
+        description = description == null ? "" : description;
     }
 
     RegionDefinition withNeighbors(Set<String> newNeighbors) {
         return new RegionDefinition(id, name, levelReq, hasChests, chestLevelMin, chestLevelMax, mobs,
-                newNeighbors, isFinal);
+                newNeighbors, isFinal, description);
     }
 }

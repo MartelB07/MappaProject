@@ -2,11 +2,13 @@ package mappa.adventure;
 
 import mappa.core.content.ContentRegistry;
 import mappa.core.inventory.ItemStack;
+import mappa.core.io.Ansi;
 import mappa.core.io.GameIO;
 import mappa.core.io.Menu;
 import mappa.core.items.ItemDefinition;
 import mappa.core.items.ItemInstance;
 import mappa.core.items.ItemSlot;
+import mappa.core.ui.Ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +17,12 @@ import java.util.List;
 public class Shop {
     private final ContentRegistry content;
     private final AdventureConfig config;
-    private final GameIO io;
+    private final Ui ui;
 
     public Shop(ContentRegistry content, AdventureConfig config, GameIO io) {
         this.content = content;
         this.config = config;
-        this.io = io;
+        this.ui = new Ui(io, AdventureGame.ACCENT);
     }
 
     public List<ItemDefinition> forSale(ItemSlot... slots) {
@@ -48,7 +50,7 @@ public class Shop {
         long price = def.price();
         int affordable = price == 0 ? amount : (int) Math.min(amount, player.wallet().gold() / price);
         if (affordable == 0) {
-            io.println("You don't have enough gold. " + def.name() + " costs " + price + ".");
+            ui.warn("You don't have enough gold. " + def.name() + " costs " + price + ".");
             return 0;
         }
         int bought = 0;
@@ -61,13 +63,13 @@ public class Shop {
             }
         }
         if (bought == 0) {
-            io.println("You don't have enough inventory space.");
+            ui.warn("You don't have enough inventory space.");
             return 0;
         }
         player.wallet().trySpend(price * bought);
-        io.println("You bought " + def.name() + " x" + bought + " for " + (price * bought) + " gold.");
+        ui.success("You bought " + def.name() + " x" + bought + " for " + (price * bought) + " gold.");
         if (bought < amount) {
-            io.println("(You could only get " + bought + " of the " + amount + " you asked for.)");
+            ui.muted("(You could only get " + bought + " of the " + amount + " you asked for.)");
         }
         return bought;
     }
@@ -82,15 +84,15 @@ public class Shop {
         }
         long gold = (long) value * n;
         player.wallet().add(gold);
-        io.println("You sold " + item.name() + " x" + n + " for " + gold + " gold.");
+        ui.success("You sold " + item.name() + " x" + n + " for " + gold + " gold.");
         return gold;
     }
 
     /** Interactive shop. */
     public void visit(AdventurePlayer player, Menu menu) {
         while (true) {
-            io.println();
-            io.println("Gold: " + player.wallet().gold());
+            ui.header("Shop", "Gold " + Ansi.color(String.valueOf(player.wallet().gold()),
+                    Ansi.Color.GOLD));
             int c = menu.choose("Shop", "leave", "Armor", "Weapons", "Heals", "Sell");
             switch (c) {
                 case Menu.CANCEL -> {
@@ -111,8 +113,7 @@ public class Shop {
             String desc = ItemInstance.of(d).statSummary();
             labels.add("[Level " + d.levelReq() + "] " + d.name() + "  [Cost: " + d.price() + "]  (" + desc + ")");
         }
-        io.println();
-        io.println("Gold: " + player.wallet().gold());
+        ui.muted("Gold: " + player.wallet().gold());
         int pick = menu.chooseFrom("What would you like to buy?", labels, "go back");
         if (pick == Menu.CANCEL) {
             return;
@@ -135,7 +136,7 @@ public class Shop {
     private void sellMenu(AdventurePlayer player, Menu menu) {
         List<ItemStack> stacks = new ArrayList<>(player.inventory().stacks());
         if (stacks.isEmpty()) {
-            io.println("No item to sell.");
+            ui.warn("No item to sell.");
             return;
         }
         List<String> labels = new ArrayList<>();
@@ -143,8 +144,7 @@ public class Shop {
             labels.add(s.item().displayName() + "  (You have: " + s.count() + ")  -> "
                     + s.item().sellValue(config.sellPercent()) + " gold each");
         }
-        io.println();
-        io.println("*Items sell for " + config.sellPercent() + "% of their original cost.*");
+        ui.muted("Items sell for " + config.sellPercent() + "% of their original cost.");
         int pick = menu.chooseFrom("Which item would you like to sell?", labels, "go back");
         if (pick == Menu.CANCEL) {
             return;

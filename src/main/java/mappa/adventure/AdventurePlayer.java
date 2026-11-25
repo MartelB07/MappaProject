@@ -24,7 +24,12 @@ public class AdventurePlayer {
     private final Inventory inventory;
     private final Wallet wallet;
 
+    /** A new character with the configured starting gear and items. */
     public AdventurePlayer(String name, AdventureConfig config, ContentRegistry content) {
+        this(name, config, content, true);
+    }
+
+    private AdventurePlayer(String name, AdventureConfig config, ContentRegistry content, boolean starterKit) {
         this.name = name;
         this.config = config;
         this.progression = new Progression(content.levelCurve(config.levelCurve()));
@@ -32,13 +37,27 @@ public class AdventurePlayer {
         this.health = new Health(stats);
         this.equipment = new Equipment(stats, health);
         this.inventory = new Inventory(config.inventorySize());
-        this.wallet = new Wallet(config.startingGold());
-        for (String id : config.startingEquipment()) {
-            equipment.equip(ItemInstance.of(content.item(id)), 0);
+        this.wallet = new Wallet(starterKit ? config.startingGold() : 0);
+        if (starterKit) {
+            for (String id : config.startingEquipment()) {
+                equipment.equip(ItemInstance.of(content.item(id)), 0);
+            }
+            for (Map.Entry<String, Integer> e : config.startingItems().entrySet()) {
+                inventory.add(ItemInstance.of(content.item(e.getKey())), e.getValue());
+            }
         }
-        for (Map.Entry<String, Integer> e : config.startingItems().entrySet()) {
-            inventory.add(ItemInstance.of(content.item(e.getKey())), e.getValue());
-        }
+        health.fill();
+    }
+
+    /** An empty character (no gear, no items, no gold) for loading a save into. */
+    static AdventurePlayer blank(String name, AdventureConfig config, ContentRegistry content) {
+        return new AdventurePlayer(name, config, content, false);
+    }
+
+    /** Sets level and EXP from a save; base stats follow the level. */
+    void restoreProgress(int level, int exp) {
+        progression.restore(level, exp);
+        applyLevelStats();
         health.fill();
     }
 

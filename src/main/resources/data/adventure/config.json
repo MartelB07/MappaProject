@@ -1,5 +1,6 @@
 {
   "id": "adventure",
+  "saves": { "slots": 3, "deleteOnDeath": false },
   "levelCurve": "adventure",
   "startRegion": "home",
   "inventorySize": 30,

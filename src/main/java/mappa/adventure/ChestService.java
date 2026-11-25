@@ -9,6 +9,8 @@ import mappa.core.items.ItemDefinition;
 import mappa.core.items.ItemInstance;
 import mappa.core.items.ItemSlot;
 import mappa.core.random.Rng;
+import mappa.core.ui.Tone;
+import mappa.core.ui.Ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +26,14 @@ public class ChestService {
     private final ContentRegistry content;
     private final AdventureConfig config;
     private final Rng rng;
-    private final GameIO io;
+    private final Ui ui;
     private int countdown;
 
     public ChestService(ContentRegistry content, AdventureConfig config, Rng rng, GameIO io) {
         this.content = content;
         this.config = config;
         this.rng = rng;
-        this.io = io;
+        this.ui = new Ui(io, AdventureGame.ACCENT);
         this.countdown = config.searchCountdownStart();
     }
 
@@ -52,9 +54,9 @@ public class ChestService {
             if (content.hasItem(id)) {
                 ItemInstance key = ItemInstance.of(content.item(id));
                 if (player.inventory().add(key)) {
-                    io.println("The monster dropped a [Level " + keyLevel + "] Key. Use it to open a chest of that level or lower.");
+                    ui.reward("The monster dropped a [Level " + keyLevel + "] Key! It opens chests of that level or lower.");
                 } else {
-                    io.println("The monster dropped a key, but your inventory is full.");
+                    ui.warn("The monster dropped a key, but your inventory is full.");
                 }
             }
         }
@@ -87,12 +89,12 @@ public class ChestService {
         player.inventory().remove(key.item());
         countdown = rng.between(config.countdownAfterOpenMin(), config.countdownAfterOpenMax());
         ChestDefinition chest = found.chest();
-        io.println("You opened a [Level " + found.level() + "] " + chest.name() + ".");
+        String opened = "You opened a [Level " + found.level() + "] " + chest.name();
         switch (chest.kind()) {
             case GOLD -> {
                 int gold = rng.between(chest.amountMin() * found.level(), chest.amountMax() * found.level());
                 player.wallet().add(gold);
-                io.println("You received " + gold + " gold.");
+                ui.banner(Tone.REWARD, opened, "You received " + gold + " gold.");
             }
             case MONSTER -> {
                 return Result.MONSTER;
@@ -101,18 +103,18 @@ public class ChestService {
                 ItemDefinition def = pickItem(chest, found.level());
                 int amount = rng.between(chest.amountMin(), chest.amountMax());
                 int added = player.inventory().add(ItemInstance.of(def), amount);
-                io.println("You received " + def.name() + " x" + added + ".");
+                ui.banner(Tone.REWARD, opened, "You received " + def.name() + " x" + added + ".");
                 if (added < amount) {
-                    io.println("Your inventory is full; " + (amount - added) + " couldn't be collected.");
+                    ui.warn("Your inventory is full; " + (amount - added) + " couldn't be collected.");
                 }
             }
             case ITEMS -> {
                 ItemDefinition def = pickItem(chest, found.level());
                 ItemInstance item = ItemInstance.of(def);
                 if (player.inventory().add(item)) {
-                    io.println("You received " + item.displayName() + ". Open your inventory to equip it.");
+                    ui.banner(Tone.REWARD, opened, "You received " + item.displayName() + ".", "Open your inventory to equip it.");
                 } else {
-                    io.println("Your inventory is full. Could not collect " + def.name() + ".");
+                    ui.banner(Tone.WARNING, opened, "Your inventory is full. Could not collect " + def.name() + ".");
                 }
             }
         }

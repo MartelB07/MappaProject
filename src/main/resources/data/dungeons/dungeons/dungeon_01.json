@@ -1,6 +1,6 @@
 {
   "id": "dungeon_01",
-  "name": "Dungeon 1",
+  "name": "Dungeon 1", "description": "A damp cave beneath the lobby. Every hero starts here.",
   "order": 1,
   "difficulties": {
     "EASY": {
