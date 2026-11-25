@@ -1,4 +1,4 @@
-# Testing Plan — MappaTestingStuff
+# Testing Plan — MappaProject
 
 Goes with [`scalability_plan.md`](scalability_plan.md). Issue IDs refer to [`current_issues.md`](current_issues.md).
 

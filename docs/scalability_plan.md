@@ -1,4 +1,4 @@
-# Scalability Plan — MappaTestingStuff
+# Scalability Plan — MappaProject
 
 ## Goal
 Restructure the project so new **dungeons, worlds/regions, mobs, weapons, armor, spells and open-world traits** can be added mostly by **adding data files**, with few or no Java changes. Player and mob stats should scale from rules, not hand-typed numbers. Every change should be testable.

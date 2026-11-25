@@ -1,4 +1,4 @@
-# Current Issues — MappaTestingStuff
+# Current Issues — MappaProject
 
 _Review date: 2026-11-24. Covers every file under `src/` plus the project and tooling setup._
 
